@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* @import "./assets/css/font.css"; */
+@import "./assets/css/card.css";
+body {
+  font-family: 'Montserrat', Helvetica Neue, Arial, sans-serif!important;
+  background: rgba(235, 235, 235, 0.8);
+}
+input {
+  outline: none!important;
+}
