@@ -22,6 +22,34 @@ const routes = [
       },
     ],
   },
+  {
+    path: "/:name",
+    meta: {
+      title: "Trang chủ",
+    },
+    name: "LayoutChildrenPage",
+    component: () =>
+      import("@/layouts/LayoutChildrenPage/LayoutChildrenPage.vue"),
+    children: [
+      {
+        path: "/gioi-thieu",
+        name: "GioiThieuPage",
+        meta: {
+          title: "Giới thiệu",
+        },
+        component: () => import("@/pages/gioi-thieu/GioiThieuPage.vue"),
+      },
+      {
+        path: "//thiet-ke-noi-that",
+        name: "ThietKeNoiThatPage",
+        meta: {
+          title: "Thiết kế nội thất",
+        },
+        component: () =>
+          import("@/pages/thiet-ke-noi-that/ThietKeNoiThatPage.vue"),
+      },
+    ],
+  },
 ];
 
 const router = createRouter({

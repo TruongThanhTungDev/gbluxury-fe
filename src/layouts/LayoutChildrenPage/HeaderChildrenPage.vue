@@ -1,22 +1,17 @@
 <template>
-  <div class="relative shadow">
+  <div>
     <div class="bg-black">
       <div class="container text-white my-0 mx-auto py-2 flex justify-between">
         <div>CÔNG TY TNHH KIẾN TRÚC XÂY DỰNG VÀ NỘI THẤT GIA BẢO</div>
         <div>
           FANPAGE:
-          <a href="https://www.facebook.com/gbluxury.vn" target="_blank"
+          <a target="_blank" href="https://www.facebook.com/gbluxury.vn"
             >www.facebook.com/gbluxury.vn</a
           >
         </div>
       </div>
     </div>
-    <div class="w-full h-[800px] relative">
-      <div class="background-header"></div>
-      <img src="../../assets/images/Phong-lam-viec-banner.jpg.webp" class="h-full w-full object-cover" alt="">
-      <img src="../../assets/logo.png" alt="" id="logo-banner" :class="isShowLogo ? 'logo-header-banner-fixed' : 'logo-header-banner'" @click="toRouter">
-    </div>
-    <div class="bg-white shadow">
+    <div class="bg-white shadow w-full" :class="isScroll ? 'navbar-container' : ''">
       <div
         class="container my-0 mx-auto flex items-center justify-between py-2"
       >
@@ -24,9 +19,6 @@
           <router-link to="/">
             <img src="../../assets/logo.png" alt="" width="60" />
           </router-link>
-          <!-- <div v-else class="h-[60px] ">
-
-          </div> -->
         </div>
         <div class="flex gap-6">
           <div v-for="item in navbarList" :key="item.name">
@@ -56,9 +48,10 @@
 
 <script>
 export default {
-  name: "HeaderComponent",
+  name: 'HeaderChildrenPage',
   data() {
     return {
+      isScroll: false,
       navbarList: [
         {
           key: 1,
@@ -120,79 +113,33 @@ export default {
       isShowLogo: false
     };
   },
-  computed: {
-  }, 
   mounted() {
-    const logo = document.getElementById('logo-banner')
-    const maxTop = 810; 
-    const initialTop = 50;
-    const maxWidth = 200
-    const minWidth = 100
     window.addEventListener('scroll', () => {
-      if (window.scrollY >= 825) {
-        this.isShowLogo = true 
+      if (window.scrollY >= 32) {
+        this.isScroll = true 
       } else {
-        this.isShowLogo = false
+        this.isScroll = false
       }
-      let newTop = initialTop + scrollY * 0.05;
-      let newWidth = maxWidth - scrollY * 0.1 ;
-      if (newTop > maxTop) {
-        newTop = maxTop;
-      } else if (scrollY === 0) {
-        newTop = initialTop;
-      }
-      if (newWidth < minWidth) {
-          newWidth = minWidth; // Giới hạn không nhỏ hơn 100px
-      }
-      logo.style = `top: ${newTop}%; width: ${newWidth}px`
-    });
-  },
-  created() {
-  },
-  unmounted() {
-  },
-  methods: {
-    toRouter() {
-      this.$router.push('/')
-    }
+    })
   }
-};
+}
 </script>
 
 <style scoped>
+.navbar-menu {
+  position: relative;
+}
 .navbar-menu:hover {
   color: black!important;
   position: relative;
+  transition: 0.2s ease-in-out;
+}
+.navbar-menu:active {
+  color: black!important;
+  transition: 0.2s ease-in-out;
 }
 .navbar-menu {
   transition: 0.2s ease-in-out;
-}
-.background-header {
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  background: black;
-  opacity: 0.3;
-}
-.navbar-container {
-  position: relative;
-}
-.logo-header-banner {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%,-50%);
-  animation: fade-in-logo 0.5s ease-in-out;
-  cursor: pointer;
-}
-.logo-header-banner-fixed {
-  position: fixed;
-  top: 60px!important;
-  left: 50%;
-  transform: translate(-50%,-50%);
-  z-index: 1;
-  animation: fade-in 0.3s ease-in-out;
-  cursor: pointer;
 }
 .navbar-container {
   position: fixed;
@@ -200,22 +147,16 @@ export default {
   width: 100%;
   z-index: 100;
   background: white;
-  box-shadow: 4px 4px 6px 0px #47474770
+  box-shadow: 4px 4px 6px 0px #80808070;
+  transition: 0.1s all;
+  /* animation: onTopFade 0.1s ease-in-out; */
 }
-@keyframes fade-in {
+@keyframes onTopFade {
   0% {
-    opacity: 0;
+    top: 32px;
   }
   100% {
-    opacity: 1;
-  }
-}
-@keyframes fade-in-logo {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
+    top: 0
   }
 }
 </style>
