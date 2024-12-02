@@ -1,0 +1,15 @@
+.container-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.ant-pagination-item {
+  border-radius: 0!important;
+}
+.ant-pagination-item-active {
+  border: 1px solid black!important;
+  background-color: black!important;
+}
+.ant-pagination .ant-pagination-item-active a {
+  color: white!important;
+}

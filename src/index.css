@@ -3,6 +3,8 @@
 @tailwind utilities;
 /* @import "./assets/css/font.css"; */
 @import "./assets/css/card.css";
+@import "./assets/css/common.css";
+
 body {
   font-family: 'Montserrat', Helvetica Neue, Arial, sans-serif!important;
   background: rgba(235, 235, 235, 0.8);

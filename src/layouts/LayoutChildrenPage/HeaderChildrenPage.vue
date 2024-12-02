@@ -66,47 +66,47 @@ export default {
           children: [
             {
               name: 'Nội thất chung cư, PENHOUSE',
-              path: '/'
+              path: '/thiet-ke-noi-that'
             },
             {
               name: 'Nội thất biệt thự, nhà phố',
-              path: '/'
+              path: '/thiet-ke-noi-that'
             },
             {
               name: 'Nội thất văn phòng',
-              path: '/'
+              path: '/thiet-ke-noi-that'
             },
             {
               name: 'Nội thất khách sạn',
-              path: '/'
+              path: '/thiet-ke-noi-that'
             }
           ]
         },
         {
           key: 3,
           name: 'Công trình',
-          path: '/',
+          path: '/cong-trinh',
           children: [
             {
               name: 'Công trình thực tế',
-              path: '/'
+              path: '/cong-trinh'
             },
             {
               name: 'Không gian công cộng',
-              path: '/'
+              path: '/cong-trinh'
             }
           ]
         },
         {
           key: 4,
           name: 'Tin tức',
-          path: '/',
+          path: '/tin-tuc',
           children: []
         },
         {
           key: 5,
           name: 'Liên hệ',
-          path: '/',
+          path: '/lien-he',
           children: []
         }
       ],

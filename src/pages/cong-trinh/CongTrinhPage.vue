@@ -1,7 +1,7 @@
 <template>
   <div class="container my-0 mx-auto">
     <div class="uppercase font-bold text-4xl mb-4 text-center">
-      THIẾT KẾ NỘI THẤT
+      CÔNG TRÌNH
     </div>
     <div class="container-list mb-4">
       <CardCommonChild v-for="(item, index) in listData" :key="index" :title="item.title" :image="item.image"/>
@@ -16,7 +16,7 @@
 import CardCommonChild from '@/components/common/CardCommonChild.vue';
 
 export default {
-  name: 'ThietKeNoiThatPage',
+  name: 'CongTrinhPage',
   components: {
     CardCommonChild
   },

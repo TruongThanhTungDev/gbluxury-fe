@@ -40,13 +40,37 @@ const routes = [
         component: () => import("@/pages/gioi-thieu/GioiThieuPage.vue"),
       },
       {
-        path: "//thiet-ke-noi-that",
+        path: "/thiet-ke-noi-that",
         name: "ThietKeNoiThatPage",
         meta: {
           title: "Thiết kế nội thất",
         },
         component: () =>
           import("@/pages/thiet-ke-noi-that/ThietKeNoiThatPage.vue"),
+      },
+      {
+        path: "/cong-trinh",
+        name: "CongTrinhPage",
+        meta: {
+          title: "Công trình",
+        },
+        component: () => import("@/pages/cong-trinh/CongTrinhPage.vue"),
+      },
+      {
+        path: "/tin-tuc",
+        name: "TinTucPage",
+        meta: {
+          title: "Tin tức",
+        },
+        component: () => import("@/pages/tin-tuc/TinTucPage.vue"),
+      },
+      {
+        path: "/lien-he",
+        name: "LienHePage",
+        meta: {
+          title: "Liên hê",
+        },
+        component: () => import("@/pages/lien-he/LienHePage.vue"),
       },
     ],
   },
