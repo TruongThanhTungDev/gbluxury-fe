@@ -86,15 +86,9 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const token = localStorage.getItem("token");
-  const tokenCookies = document.cookie
-    .split("; ")
-    .find((row) => row.startsWith("_t"))
-    ?.split("=")[1];
   if (to.matched.some((record) => record.meta.requiresAuth)) {
     if (!token) {
       next("/login");
-    } else if (!tokenCookies) {
-      next("/");
     } else {
       next();
     }

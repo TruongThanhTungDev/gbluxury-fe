@@ -1,16 +1,14 @@
 export const routesAdmin = [
-  // {
-  //   path: "/admin",
-  //   meta: { title: "경민대학교 입시사이트 시안", requiresAuth: true },
-  //   name: "AdminNoticePage",
-  //   component: () =>
-  //     import("@/layouts/admin/LayoutAdminPage/LayoutAdminPage.vue"),
-  //   children: [
-  //     {
-  //       path: "",
-  //       name: "AdminNoticePage",
-  //       component: () => import("@/pages/admin/NoticePage.vue"),
-  //     },
-  //   ],
-  // },
+  {
+    path: "/login",
+    meta: { title: "Login", requiresAuth: false },
+    name: "LoginPage",
+    component: () => import("@/pages/admin/login/LoginPage.vue"),
+  },
+  {
+    path: "/admin/:page",
+    meta: { title: "Trang quản trị", requiresAuth: false },
+    name: "LayoutAdminPage",
+    component: () => import("@/layouts/LayoutAdminPage/LayoutAdminPage.vue"),
+  },
 ];
