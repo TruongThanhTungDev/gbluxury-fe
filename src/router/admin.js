@@ -6,9 +6,24 @@ export const routesAdmin = [
     component: () => import("@/pages/admin/login/LoginPage.vue"),
   },
   {
-    path: "/admin/:page",
+    path: "/admin",
     meta: { title: "Trang quản trị", requiresAuth: false },
     name: "LayoutAdminPage",
     component: () => import("@/layouts/LayoutAdminPage/LayoutAdminPage.vue"),
+    children: [
+      {
+        path: "loai-bai-viet",
+        meta: { title: "Quản lý loại bài viết", requiresAuth: false },
+        name: "CategoryNews",
+        component: () => import("@/pages/admin/loai-bai-viet/CategoryNew.vue"),
+      },
+      {
+        path: "quan-ly-bai-viet",
+        meta: { title: "Quản lý bài viết", requiresAuth: false },
+        name: "QuanLyBaiVietPage",
+        component: () =>
+          import("@/pages/admin/quan-ly-bai-viet/QuanLyBaiViet.vue"),
+      },
+    ],
   },
 ];
