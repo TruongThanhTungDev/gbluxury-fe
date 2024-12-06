@@ -44,7 +44,7 @@ export default {
   },
   methods: {
     login() {
-      this.$router.push('/admin/category')
+      this.$router.push('/admin/quan-ly-bai-viet')
     }
   }
 }

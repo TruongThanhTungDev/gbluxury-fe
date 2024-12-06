@@ -97,6 +97,7 @@ export default {
         content: createVNode(AddEditNews),
         icon: null,
         width: "75%",
+        class: 'abc',
         okText: "Lưu",
         closable: true,
         onOk() {

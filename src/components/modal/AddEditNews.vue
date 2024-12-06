@@ -1,5 +1,5 @@
 <template>
-  <div class="grid grid-cols-3 gap-6">
+  <div class="grid grid-cols-3 gap-6 h-[600px]">
     <div class="flex flex-col gap-4 border-r pr-6">
       <div>
         <div>
@@ -54,17 +54,37 @@
         </a-upload-dragger>
       </div>
     </div>
-    <div class="col-span-2">
+    <div class="col-span-2 overflow-auto">
+      <QuillEditor :options="editorOptions"/>
+      <!-- <QuillEditor toolbar="#my-toolbar">
+        <template #toolbar>
+          <div id="my-toolbar">
+            <span class="ql-formats">
+              <select class="ql-font">
+                <option selected>Sans Serif</option>
+                <option value="inconsolata">Inconsolata</option>
+                <option value="roboto">Roboto</option>
+                <option value="mirza">Mirza</option>
+                <option value="arial">Arial</option>
+                <option value="montserrat">Montserrat</option>
+              </select>
+              <select class="ql-size"></select>
+            </span>
+          </div>
+        </template>
+      </QuillEditor> -->
     </div>
   </div>
 </template>
 
 <script>
+import { Quill, QuillEditor } from '@vueup/vue-quill'
 import { Select, Input, UploadDragger } from "ant-design-vue";
 import { InboxOutlined } from '@ant-design/icons-vue';
 export default {
   name: 'AddEditView',
   components: {
+    QuillEditor,
     ASelect: Select,
     AInput: Input,
     InboxOutlined,
@@ -82,6 +102,34 @@ export default {
   },
   data() {
     return {
+      editorOptions: {
+        theme: 'snow',
+        modules: {
+          toolbar: [
+            [{ header: [1, 2, 3, 4, 5, 6, false] }], // Tiêu đề H1-H6
+            [{ font: ['montserrat'] }],
+            [{ size: ['small', false, 'large', 'huge'] }], // Kích thước font
+            ['bold', 'italic', 'underline', 'strike'], // Chữ đậm, nghiêng, gạch chân, gạch ngang
+            [{ color: [] }, { background: [] }], // Màu chữ và màu nền
+            [{ script: 'sub' }, { script: 'super' }], // Chỉ số dưới, chỉ số trên
+            [{ list: 'ordered' }, { list: 'bullet' }], // Danh sách có thứ tự, không thứ tự
+            [{ indent: '-1' }, { indent: '+1' }], // Tăng giảm thụt đầu dòng
+            [{ align: [] }], // Canh lề
+            ['link', 'image', 'video'], // Thêm liên kết, hình ảnh, video
+            ['blockquote', 'code-block'], // Khối trích dẫn, mã code
+            ['clean'], // Xóa định dạng
+          ],
+          clipboard: {
+            matchVisual: false, // Tắt dán trực quan
+          },
+          history: {
+            delay: 2000,
+            maxStack: 500,
+          },
+        },
+        placeholder: 'Nhập nội dung tại đây...', // Gợi ý khi chưa nhập nội dung
+        readOnly: false, // Chế độ chỉ đọc
+      },
       categoryChild: '',
       categoryParent: null,
       title: '',
@@ -93,10 +141,20 @@ export default {
         { value: '3', label: 'Tin tức', path: 'tin-tuc' },
       ]
     }
-  }
+  },
+  mounted() {
+    const Font = Quill.import('formats/font');
+    Font.whitelist = ['montserrat'];
+    Quill.register(Font, true);
+  },
 }
 </script>
 
-<style>
-
+<style scoped>
+.ql-editor {
+  min-height: 200px!important;
+  max-height: 600px!important;
+  overflow-y: auto;
+  font-family: 'Montserrat', Helvetica Neue, Arial, sans-serif!important
+}
 </style>

@@ -16,3 +16,12 @@
 :where(.css-dev-only-do-not-override-19iuou)[class*=" ant-layout"] {
   font-family: 'Montserrat', Helvetica Neue, Arial, sans-serif!important;
 }
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value=montserrat]::before, .ql-snow .ql-picker.ql-font .ql-picker-item[data-value=montserrat]::before {
+  content: 'Monterrat'!important;
+}
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value=montserrat]::before {
+    font-family: Montserrat, Helvetica Neue, Arial, sans-serif!important;
+}
+.ql-font-montserrat {
+  font-family: 'Montserrat', Helvetica Neue, Arial, sans-serif!important;
+}
