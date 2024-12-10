@@ -123,29 +123,33 @@ export default {
       listIdSelected: [],
       listData: [
         {
-          name: 'Bài viết 1',
-          id: 1,
-          description: 'Bài viết 1',
+          id: '1-1',
+          name: 'THI CÔNG NỘI THẤT ACRYLIC AN CƯỜNG MR NAM - LÝ HÒA - QUẢNG BÌNH',
+          description: '',
+          image: 'thiet-ke-noi-that-chung-cu-lancaster-duong-lang-7.avif',
           createAt: '20/12/2024'
         },
         {
-          name: 'Bài viết 2',
-          id: 2,
-          description: 'Bài viết 1',
+          id: '1-2',
+          name: 'THI CÔNG NỘI THẤT ACRYLIC AN CƯỜNG MR NAM - LÝ HÒA - QUẢNG BÌNH',
+          description: '',
+          image: 'thiet-ke-noi-that-chung-cu-lancaster-duong-lang-7.avif',
           createAt: '20/12/2024'
         },
         {
-          name: 'Bài viết 3',
-          id: 3,
-          description: 'Bài viết 1',
+          id: '1-3',
+          name: 'THI CÔNG NỘI THẤT ACRYLIC AN CƯỜNG MR NAM - LÝ HÒA - QUẢNG BÌNH',
+          description: '',
+          image: 'thiet-ke-noi-that-chung-cu-lancaster-duong-lang-7.avif',
           createAt: '20/12/2024'
         },
         {
-          name: 'Bài viết 4',
-          id: 4,
-          description: 'Bài viết 1',
+          id: '1-4',
+          name: 'THI CÔNG NỘI THẤT ACRYLIC AN CƯỜNG MR NAM - LÝ HÒA - QUẢNG BÌNH',
+          description: '',
+          image: 'thiet-ke-noi-that-chung-cu-lancaster-duong-lang-7.avif',
           createAt: '20/12/2024'
-        }
+        },
       ],
       options: [
         { value: '1', label: 'Thiết kế nội thất', path: 'thiet-ke-noi-that' },
