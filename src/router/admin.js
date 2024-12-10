@@ -24,6 +24,13 @@ export const routesAdmin = [
         component: () =>
           import("@/pages/admin/quan-ly-bai-viet/QuanLyBaiViet.vue"),
       },
+      {
+        path: "cau-hinh-trang-chu",
+        meta: { title: "Quản lý bài viết", requiresAuth: false },
+        name: "CauHinhHomePage",
+        component: () =>
+          import("@/pages/admin/cau-hinh-home/CauHinhHomePage.vue"),
+      },
     ],
   },
 ];

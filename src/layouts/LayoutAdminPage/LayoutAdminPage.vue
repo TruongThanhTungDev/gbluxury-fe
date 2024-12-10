@@ -34,7 +34,8 @@ import {
   UserOutlined,
   UnorderedListOutlined,
   FileTextOutlined,
-  LogoutOutlined
+  LogoutOutlined,
+  SettingOutlined 
 } from '@ant-design/icons-vue';
 // import { h } from 'vue';
 export default {
@@ -43,7 +44,8 @@ export default {
     UserOutlined,
     UnorderedListOutlined,
     FileTextOutlined,
-    LogoutOutlined 
+    LogoutOutlined,
+    SettingOutlined 
   },
   data() {
     return {
@@ -67,6 +69,12 @@ export default {
           name: 'Quản lý bài viết',
           path: '/admin/quan-ly-bai-viet',
           icon: 'FileTextOutlined'
+        },
+        {
+          key: 'setting',
+          name: 'Cấu hình Trang chủ',
+          path: '/admin/cau-hinh-trang-chu',
+          icon: 'SettingOutlined'
         },
       ],
     }
