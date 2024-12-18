@@ -27,6 +27,8 @@
 </template>
 
 <script>
+import { loginHome } from '@/api/login-home';
+import notify from '@/service/notify';
 import { EyeTwoTone, EyeInvisibleOutlined } from '@ant-design/icons-vue';
 
 export default {
@@ -42,9 +44,23 @@ export default {
       isShowPassword: false
     }
   },
+  created() {
+    localStorage.clear()
+  },
   methods: {
     login() {
-      this.$router.push('/admin/quan-ly-bai-viet')
+      const payload = {
+        userName : this.username,
+        password: this.password
+      }
+      loginHome(payload).then(res => {
+        if (res && res.data.code === 200) {
+          notify.success('Đăng nhập thành công')
+          this.$router.push('/admin/quan-ly-bai-viet')
+        } else {
+          notify.error(res.data.message)
+        }
+      })
     }
   }
 }

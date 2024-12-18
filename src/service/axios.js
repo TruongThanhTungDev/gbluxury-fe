@@ -1,6 +1,4 @@
 import axios from "axios";
-import { decodeValue, encodeValue } from "@/service/crypto";
-import cookies from "js-cookie";
 import { API_URL } from "@/api/constant";
 
 const instance = axios.create({
@@ -58,17 +56,14 @@ async function DELETE(url, params) {
 
 instance.interceptors.request.use(
   (config) => {
-    const _t = cookies.get("_t");
+    const _t = localStorage.getItem('token')
     if (_t) {
-      const token = JSON.parse(decodeValue(_t));
-      if (token && !isTokenExpired(token.accessToken)) {
-        config.headers.Authorization = `Bearer ${token.accessToken}`;
-      }
+      config.headers.Authorization = `Bearer ${_t}`;
     }
     return config;
   },
   (error) => {
-    handleRefreshToken(error);
+    console.error(error)
   }
 );
 
@@ -77,92 +72,9 @@ instance.interceptors.response.use(
     return response;
   },
   (error) => {
-    if (error?.response?.status === 401) handleRefreshToken(error);
+    if (error?.response?.status === 401) console.error(error);
     else return error;
   }
 );
 
 export { GET, PUT, POST, DELETE };
-
-const handleRefreshToken = async (error) => {
-  const originalRequest = error.config;
-
-  if (error.response.status === 401 && !originalRequest._retry) {
-    originalRequest._retry = true;
-
-    const _t = cookies.get("_t");
-    let token;
-    if (_t) token = JSON.parse(decodeValue(_t));
-
-    if (token && !isTokenExpired(token.refreshToken)) {
-      try {
-        const refreshedToken = await refreshToken(
-          token.accessToken,
-          token.refreshToken
-        );
-        instance.defaults.headers.common[
-          "Authorization"
-        ] = `Bearer ${refreshedToken.accessToken}`;
-        originalRequest.headers[
-          "Authorization"
-        ] = `Bearer ${refreshedToken.accessToken}`;
-
-        return instance(originalRequest);
-      } catch (refreshError) {
-        handleTokenExpiration();
-      }
-    } else {
-      handleTokenExpiration();
-    }
-  }
-  return console.error(error);
-};
-
-const refreshToken = async (token, refreshToken) => {
-  const response = await axios.post(
-    `${API_URL}/auth/refresh-token`,
-    { refreshToken: refreshToken },
-    { headers: { Authorization: `Bearer ${token}` } }
-  );
-  const data = response.data;
-  const newToken = {
-    accessToken: data.accessToken,
-    refreshToken: refreshToken,
-  };
-
-  if (!newToken?.message) {
-    cookies.set("_t", encodeValue(JSON.stringify(newToken)), {
-      expires: 7,
-    });
-  }
-
-  return newToken;
-};
-
-export function isTokenExpired(token, time = 0) {
-  if (!token) return true;
-  const tokenData = parseToken(token);
-  if (!tokenData || !tokenData.exp) return true;
-  const currentTime = Math.floor(Date.now() / 1000);
-  return tokenData.exp + time < currentTime;
-}
-
-function parseToken(token) {
-  try {
-    const tokenParts = token.split(".");
-    if (tokenParts.length === 3) {
-      const payload = JSON.parse(atob(tokenParts[1]));
-      return payload;
-    }
-  } catch (error) {
-    console.error("Failed to parse token:", error);
-  }
-  return null;
-}
-
-const handleTokenExpiration = () => {
-  cookies.remove("_t");
-  cookies.remove("_user");
-  localStorage.removeItem("_user");
-  // window.location.href = "/";
-};

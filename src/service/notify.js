@@ -9,8 +9,8 @@ const openNotification = (type, message, description) => {
 
 export default {
   success: (description) =>
-    openNotification("success", "성공적으로", description),
-  error: (description) => openNotification("error", "오류", description),
-  info: (description) => openNotification("info", "", description),
-  warning: (description) => openNotification("warning", "경고", description),
+    openNotification("success", "Thành công", description),
+  error: (description) => openNotification("error", "Lỗi", description),
+  info: (description) => openNotification("info", "Thông báo", description),
+  warning: (description) => openNotification("warning", "Cảnh báo", description),
 };

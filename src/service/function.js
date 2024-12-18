@@ -1,53 +1,20 @@
-import { URL } from "@/api/constant";
 
-export const getPartName = (part, pos) => {
-  if (!part) return "";
-  const cutPart = part.split("/");
-  return pos ? cutPart[pos] : cutPart[1];
-};
-
-export const getListItemDefault = (number = 0) => {
-  const items = [];
-  for (let i = 0; i < number; i++) {
-    items.push(i + 1);
-  }
-  return items;
-};
-
-export const getPageNumber = (count = 0, limit = 10) => {
-  if (count <= 0) return 1;
-  return Math.ceil(count / limit);
-};
-
-export const getUrlImage = (url) => {
-  return URL + url;
-};
-
-export const convertDataForJson = (value) => {
-  const result = JSON.parse(value);
-  if (Array.isArray(result)) return result;
-  if (typeof result === "string") return [result];
-  return [];
-};
-
-export const getDotFile = (name) => {
-  if (!name) return "";
-  return name.split(".")[1];
-};
-
-export const downloadFile = ({ filename, url }) => {
-  if (url) {
-    fetch(url)
-      .then((response) => response.blob())
-      .then((blob) => {
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = filename;
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-        window.URL.revokeObjectURL(url);
-      });
-  }
-};
+export const convertToSlug = (str) => {
+  str = str.toLowerCase();
+  str = str.replace(/á|à|ả|ã|ạ/g, 'a')
+    .replace(/ă|ắ|ằ|ẳ|ẵ|ặ/g, 'a')
+    .replace(/â|ầ|ấ|ẩ|ẫ|ậ/g, 'a')
+    .replace(/é|è|ẻ|ẽ|ẹ/g, 'e')
+    .replace(/ê|ế|ề|ể|ễ|ệ/g, 'e')
+    .replace(/í|ì|ỉ|ĩ|ị/g, 'i')
+    .replace(/ó|ò|ỏ|õ|ọ/g, 'o')
+    .replace(/ô|ố|ồ|ổ|ỗ|ộ/g, 'o')
+    .replace(/ơ|ớ|ờ|ở|ỡ|ợ/g, 'o')
+    .replace(/ú|ù|ủ|ũ|ụ/g, 'u')
+    .replace(/ư|ừ|ử|ữ|ự/g, 'u')
+    .replace(/ý|ỳ|ỷ|ỹ|ỵ/g, 'y')
+    .replace(/đ/g, 'd');
+  str = str.replace(/\s+/g, '-');
+  str = str.replace(/[^a-z0-9-]/g, '');
+  return str
+}

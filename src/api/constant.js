@@ -1,20 +1,5 @@
-export const URL = "http://43.201.36.79:8081";
-export const API_URL = URL + "/v1";
+export const API_URL = "http://localhost:8082/api/v1/";
 
-export const AUTH_URL = "/auth";
-export const GUEST = "/guest";
-export const NOTICE_URL = "/notice";
-export const LIBRARY_URL = "/library";
-export const MAIN_CATEGORY_URL = "/main-category";
-export const PROFESSOR_URL = "/professor";
-export const USER_URL = "/user";
-export const DEPARTMENT_URL = "/department";
-export const DEPARTMENT_NEWS_URL = "/department-news";
-export const DEPARTMENT_FAQ_URL = "/department-faq";
-export const DEPARTMENT_ACTIVITY_URL = "/department-activity";
-export const DEPARTMENT_MEDIA_URL = "/department-media";
-export const COMPANY_URL = "/company";
-export const CAPTCHA_URL = "/captcha";
-export const BOARD_MEDIA_URL = "/board-media";
-export const GRADUATE_URL = "/graduate";
-export const MAIN_VIDEO = "/main-video"
+
+export const LOGIN_URL = 'user/login'
+export const CATEGORIES_URL = 'categories'

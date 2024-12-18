@@ -16,7 +16,7 @@
     <a-layout>
       <a-layout-header style="background: #fff; padding: 0">
         <div class="flex justify-end items-center h-full mr-4">
-          <a-button danger type="primary" class="flex items-center gap-2">
+          <a-button danger type="primary" class="flex items-center gap-2" @click="logout">
             Đăng xuất
             <i class="fa-solid fa-right-from-bracket"></i>
           </a-button>
@@ -50,7 +50,7 @@ export default {
   data() {
     return {
       collapsed: false,
-      selectedKeys: ['categories'],
+      selectedKeys: ['news'],
       listRouter: [
         {
           key: 'account',
@@ -82,6 +82,9 @@ export default {
   methods: {
     toRouter(item) {
       this.$router.push(item.path)
+    },
+    logout() {
+      this.$router.push('/login')
     }
   }
 }
