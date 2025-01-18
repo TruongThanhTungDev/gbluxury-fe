@@ -14,7 +14,7 @@
           class="w-full"
           v-model="categoryParent"
           @select="selectParent($event)"
-          :disabled="mode === 'view'"
+          :disabled="mode === 'view' || mode === 'edit'"
         ></a-select>
       </div>
       <div>
@@ -65,6 +65,7 @@ export default {
     return {
       isLoading: false,
       categoryChild: '',
+      categoryChildId: null,
       categoryParentPath: '',
       categoryParent: null,
       payload: null,
@@ -91,6 +92,13 @@ export default {
             path: item.path,
             title: item.title
           }))
+          if (this.data) {
+            const data = JSON.parse(JSON.stringify(this.data))
+            this.categoryParent = data.parentCategoryId
+            this.selectParent(this.categoryParent)
+            this.categoryChild = data.title
+            this.categoryChildId = data.id
+          }
           if (this.parentCategoryId) {
             this.categoryParent = this.parentCategoryId
             this.selectParent(this.categoryParent)
@@ -111,9 +119,7 @@ export default {
       console.log("Nút trong Modal được nhấn!");
     },
     selectParent(event) {
-      console.log('event :>> ', event);
       const item = this.options.find(el => el.id == event)
-      console.log('item :>> ', item);
       if (item) {
         this.categoryParentPath = '/' + item.code
       }
@@ -151,8 +157,38 @@ export default {
         ...payload
       }
       console.log('this.payload :>> ', this.payload);
-    }
-    
+    },
+    htmlToDelta(html) {
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, 'text/html');
+      const delta = [];
+
+      function parseNode(node) {
+        if (node.nodeType === Node.TEXT_NODE) {
+          delta.push({ insert: node.textContent });
+        } else if (node.nodeType === Node.ELEMENT_NODE) {
+          const attributes = {};
+
+          // Xử lý định dạng văn bản
+          if (node.tagName === 'B' || node.tagName === 'STRONG') {
+            attributes.bold = true;
+          } else if (node.tagName === 'I' || node.tagName === 'EM') {
+            attributes.italic = true;
+          } else if (node.tagName === 'U') {
+            attributes.underline = true;
+          }
+
+          // Thêm vào Delta
+          delta.push({ insert: node.textContent, attributes });
+        }
+      }
+
+      doc.body.childNodes.forEach((node) => {
+        parseNode(node);
+      });
+
+      return delta;
+    }    
   },
 };
 </script>

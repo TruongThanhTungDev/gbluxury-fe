@@ -21,6 +21,7 @@
     "js-cookie": "^3.0.5",
     "pspdfkit": "^2024.5.0",
     "query-string": "^9.1.0",
+    "quill-delta-to-html": "^0.12.1",
     "vue": "^3.2.13",
     "vue-lite-youtube-embed": "^1.2.4",
     "vue-router": "^4.0.13",

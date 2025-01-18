@@ -53,12 +53,6 @@ export default {
       selectedKeys: ['news'],
       listRouter: [
         {
-          key: 'account',
-          name: 'Tài khoản',
-          path: '/admin/tai-khoan',
-          icon: 'UserOutlined'
-        },
-        {
           key: 'categories',
           name: 'Quản lý loại bài viết',
           path: '/admin/loai-bai-viet',

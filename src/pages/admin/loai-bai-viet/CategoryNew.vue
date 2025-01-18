@@ -27,7 +27,7 @@
                   <a-button type="primary" @click="editDetailChild(record)">
                     <i class="fa-solid fa-pen"></i>
                   </a-button>
-                  <a-button type="primary" danger>
+                  <a-button type="primary" danger @click="deleteCategory(record.id)">
                     <i class="fa-solid fa-trash"></i>
                   </a-button>
                 </div>
@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import { addNewCategoryChildren, getListCategoryParent } from "@/api/categories";
+import { addNewCategoryChildren, deleteCategoryChildren, editCategoryChildren, getListCategoryParent } from "@/api/categories";
 import AddEditCategoryChild from "@/components/modal/AddEditCategoryChild.vue";
 import { convertToSlug } from "@/service/function";
 import notify from "@/service/notify";
@@ -105,7 +105,13 @@ export default {
       getListCategoryParent().then(res => {
         if (res && res.length) {
           this.isLoading = false
-          this.dataCategories = [...res]
+          this.dataCategories = res.map(item => ({
+            ...item,
+            subCategories: item.subCategories.map(el => ({
+              ...el,
+              parentCategoryId: item.id
+            }))
+          }))
           if (isGetData) {
             const index = this.dataCategories.findIndex(item => item.id === this.categoryParent)
             if (index !== -1) {
@@ -191,9 +197,10 @@ export default {
         mode: 'view',
         data
       }
+      const modal = createVNode(AddEditCategoryChild, props)
       Modal.confirm({
         title: "Xem chi tiết",
-        content: createVNode(AddEditCategoryChild, props),
+        content: modal,
         icon: null,
         width: '30%',
         closable: true,
@@ -218,10 +225,40 @@ export default {
           disabled: props.mode === 'view',
         },
         onOk: async() => {
+          const title = JSON.parse(JSON.stringify(modal.component.data.categoryChild))
+          const categoryParentPath = JSON.parse(JSON.stringify(modal.component.data.categoryParentPath))
+          const path = categoryParentPath + '/' + convertToSlug(title)
+          const code = convertToSlug(title)
+          const name = title
+          const categoryChildId = JSON.parse(JSON.stringify(modal.component.data.categoryChildId))
           const payload = {
-            ...JSON.parse(JSON.stringify(modal.component.data.payload))
+            title,
+            path,
+            code,
+            name,
+            parentCategoryId: this.categoryParent
           }
-          console.log('payload :>> ', payload);
+          if (!title) {
+            notify.warning('Vui lòng nhập tiêu đề loại bài viết con')
+            return
+          }
+          if (!categoryParentPath) {
+            notify.warning('Vui lòng chọn loại bài viết')
+            return
+          }
+          this.isLoading = true
+          editCategoryChildren(categoryChildId,payload).then(res => {
+            if (res && res.status == 201) {
+              this.isLoading = false
+              notify.success('Cập nhật loại bài viết con thành công')
+              this.getDataCategories(true)
+            } else {
+              notify.error('Cập nhật thất bại')
+            }
+          })
+            .finally(() => {
+            this.isLoading = false
+          })
         },
         cancelText: 'Hủy',
         onCancel() {
@@ -231,6 +268,30 @@ export default {
     },
     onSelectChild(event) {
       console.log('event :>> ', event);
+    },
+    deleteCategory(id) {
+      Modal.confirm({
+        title: "Xác nhận xóa?",
+        content: 'Bạn có chắc chắc muốn xóa bản ghi này?',
+        icon: null,
+        okText: 'Lưu',
+        closable: true,
+        onOk: async () => {
+          this.isLoading = true
+          deleteCategoryChildren(id).then(res => {
+            if (res.data.code === 200) {
+              notify.success('Xóa bản ghi thành công')
+              this.getDataCategories(true)
+            }
+          })
+            .finally(() => {
+            this.isLoading = false
+          })
+        },
+        onCancel() {
+          Modal.destroyAll()
+        }
+      })
     }
   }
 }

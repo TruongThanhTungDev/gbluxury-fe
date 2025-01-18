@@ -4,7 +4,7 @@ import { API_URL } from "@/api/constant";
 const instance = axios.create({
   baseURL: API_URL,
   timeout: 3000000,
-  headers: { "Content-Type": "application/json" },
+  headers: { "Content-Type": "application/json, text/plain" },
 });
 
 instance.interceptors.request.use;

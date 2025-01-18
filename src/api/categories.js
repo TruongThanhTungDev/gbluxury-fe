@@ -28,4 +28,54 @@ async function addNewCategoryChildren(params) {
     .catch(err => reject(err))
   })
 }
-export { getListCategoryParent, addNewCategoryChildren };
+
+async function editCategoryChildren(categoryId, params) {
+  return new Promise((resolve, reject) => {
+    axios
+      .PUT(CATEGORIES_URL + "/custom/update?categoryId=" + categoryId, params)
+      .then((res) => {
+        if (res) {
+          resolve(res);
+        } else {
+          resolve(res);
+        }
+      })
+      .catch((err) => reject(err));
+  });
+}
+
+async function deleteCategoryChildren(id) {
+  return new Promise((resolve, reject) => {
+    axios
+      .DELETE(CATEGORIES_URL + "/delete?id=" + id, "")
+      .then((res) => {
+        if (res) {
+          resolve(res);
+        } else {
+          resolve(res);
+        }
+      })
+      .catch((err) => reject(err));
+  });
+}
+async function getChildrenById(id) {
+  return new Promise((resolve, reject) => {
+    axios
+      .GET(CATEGORIES_URL + "/tree/by-id?parentId=" + id, "")
+      .then((res) => {
+        if (res) {
+          resolve(res);
+        } else {
+          resolve(res);
+        }
+      })
+      .catch((err) => reject(err));
+  });
+}
+export {
+  getListCategoryParent,
+  addNewCategoryChildren,
+  editCategoryChildren,
+  deleteCategoryChildren,
+  getChildrenById,
+};

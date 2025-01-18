@@ -1,86 +1,83 @@
 <template>
-  <div class="grid grid-cols-3 gap-6 h-[600px]">
-    <div class="flex flex-col gap-4 border-r pr-6">
-      <div>
+  <a-spin :spinning="isLoading">
+    <div class="grid grid-cols-3 gap-6 h-[600px]">
+      <div class="flex flex-col gap-4 border-r pr-6">
         <div>
-          Chọn loại bài viết <span class="text-red-500">*</span>
-        </div>
-        <a-select
-          show-search
-          placeholder="Chọn loại bài viết"
-          :options="options"
-          class="w-full"
-          v-model="categoryParent"
-          :disabled="mode === 'view'"
-        ></a-select>
-      </div>
-      <div>
-        <div>
-          Chọn loại bài viết con <span class="text-red-500">*</span>
-        </div>
-        <a-select
-          show-search
-          placeholder="Chọn loại bài viết"
-          :options="options"
-          class="w-full"
-          v-model="categoryParent"
-          :disabled="mode === 'view'"
-        ></a-select>
-      </div>
-      <div>
-        <div>
-          Nhập tiêu đề <span class="text-red-500">*</span>
-        </div>
-        <a-input v-model:value="title" placeholder="Nhập tiêu đề" :disabled="mode === 'view'"/>
-      </div>
-      <div>
-        <div>
-          Nhập mô tả
-        </div>
-        <a-input v-model:value="description" placeholder="Nhập mô tả" :disabled="mode === 'view'"/>
-      </div>
-      <div>
-        <div>
-          Chọn ảnh hiển thị
-        </div>
-        <a-upload-dragger
-          name="file"
-          :beforeUpload="false"
-        >
-          <p class="ant-upload-drag-icon">
-            <inbox-outlined></inbox-outlined>
-          </p>
-          <p class="ant-upload-text">Click hoặc kéo thả để upload ảnh</p>
-        </a-upload-dragger>
-      </div>
-    </div>
-    <div class="col-span-2 overflow-auto">
-      <QuillEditor :options="editorOptions"/>
-      <!-- <QuillEditor toolbar="#my-toolbar">
-        <template #toolbar>
-          <div id="my-toolbar">
-            <span class="ql-formats">
-              <select class="ql-font">
-                <option selected>Sans Serif</option>
-                <option value="inconsolata">Inconsolata</option>
-                <option value="roboto">Roboto</option>
-                <option value="mirza">Mirza</option>
-                <option value="arial">Arial</option>
-                <option value="montserrat">Montserrat</option>
-              </select>
-              <select class="ql-size"></select>
-            </span>
+          <div>
+            Chọn loại bài viết <span class="text-red-500">*</span>
           </div>
-        </template>
-      </QuillEditor> -->
+          <a-select
+            show-search
+            placeholder="Chọn loại bài viết"
+            :options="options"
+            :field-names="{ label: 'title', value: 'id'}"
+            class="w-full"
+            v-model:value="categoryParent"
+            @change="getCategoriesChildren"
+            :disabled="mode === 'view' || mode === 'edit'"
+          ></a-select>
+        </div>
+        <div>
+          <div>
+            Chọn loại bài viết con <span class="text-red-500">*</span>
+          </div>
+          <a-select
+            show-search
+            placeholder="Chọn loại bài viết"
+            :options="categoryChildrenList"
+            :field-names="{ label: 'title', value: 'id'}"
+            v-model:value="categoryChild"
+            class="w-full"
+            :disabled="mode === 'view' || mode === 'edit'"
+          ></a-select>
+        </div>
+        <div>
+          <div>
+            Nhập tiêu đề <span class="text-red-500">*</span>
+          </div>
+          <a-input v-model:value="title" placeholder="Nhập tiêu đề" :disabled="mode === 'view'"/>
+        </div>
+        <div>
+          <div>
+            Nhập mô tả
+          </div>
+          <a-input v-model:value="description" placeholder="Nhập mô tả" :disabled="mode === 'view'"/>
+        </div>
+        <div>
+          <div>
+            Chọn ảnh hiển thị
+          </div>
+          <a-upload-dragger
+            name="file"
+            accept=".jpg,.jpeg,.png"
+            type="image"
+            :beforeUpload="beforeUpload"
+            @remove="removeImage"
+            :fileList="background"
+            list-type="picture-card"
+          >
+            <p class="ant-upload-drag-icon">
+              <inbox-outlined></inbox-outlined>
+            </p>
+            <p class="ant-upload-text">Click hoặc kéo thả để upload ảnh</p>
+          </a-upload-dragger>
+        </div>
+      </div>
+      <div class="col-span-2 overflow-auto">
+        <QuillEditor v-model:content="content" :options="editorOptions"/>
+      </div>
     </div>
-  </div>
+  </a-spin>
 </template>
 
 <script>
 import { Quill, QuillEditor } from '@vueup/vue-quill'
-import { Select, Input, UploadDragger } from "ant-design-vue";
+import { Select, Input, UploadDragger, Spin } from "ant-design-vue";
 import { InboxOutlined } from '@ant-design/icons-vue';
+import { getChildrenById, getListCategoryParent } from '@/api/categories';
+import notify from '@/service/notify';
+import { toRaw } from 'vue';
+import { getDetailNewsAdmin } from '@/api/news';
 export default {
   name: 'AddEditView',
   components: {
@@ -89,6 +86,7 @@ export default {
     AInput: Input,
     InboxOutlined,
     AUploadDragger: UploadDragger,
+    ASpin: Spin
   },
   props: {
     mode: {
@@ -130,16 +128,15 @@ export default {
         placeholder: 'Nhập nội dung tại đây...', // Gợi ý khi chưa nhập nội dung
         readOnly: false, // Chế độ chỉ đọc
       },
-      categoryChild: '',
+      isLoading: false,
+      categoryChild: null,
       categoryParent: null,
       title: '',
       description: '',
-      background: '',
-      options: [
-        { value: '1', label: 'Thiết kế nội thất', path: 'thiet-ke-noi-that' },
-        { value: '2', label: 'Công trình', path: 'cong-trinh' },
-        { value: '3', label: 'Tin tức', path: 'tin-tuc' },
-      ]
+      background: [],
+      content: '',
+      options: null,
+      categoryChildrenList: []
     }
   },
   mounted() {
@@ -147,6 +144,91 @@ export default {
     Font.whitelist = ['montserrat'];
     Quill.register(Font, true);
   },
+  created() {
+    if (this.mode === 'edit') {
+      this.getDetailNews(this.data.id)
+    } else {
+      this.getDataCategories()
+    }
+  },
+  methods: {
+    getDetailNews(id) {
+      this.isLoading = true
+      getDetailNewsAdmin(id).then(res => {
+        console.log('res :>> ', res);
+      })
+    },
+    getDataCategories() {
+      this.isLoading = true 
+      getListCategoryParent().then(res => {
+        if (res && res.length) {
+          this.isLoading = false
+          this.options = res.map(item => ({
+            id: item.id,
+            title: item.title
+          }))
+          if (this.data) {
+            const data = toRaw(this.data)
+            console.log('data :>> ', data);
+          }
+        } else {
+          this.isLoading = false
+          this.options = []
+        }
+      })
+        .catch(() => {
+        this.isLoading = false
+      })
+        .finally(() => {
+        this.isLoading = false
+      })
+    },
+    getCategoriesChildren() {
+      this.isLoading = true 
+      getChildrenById(this.categoryParent).then(res => {
+        if (res) {
+          this.isLoading = false
+          if (res.subCategories) {
+            this.categoryChildrenList = res.subCategories.map(item => ({
+              id: item.id,
+              title: item.title
+            }))
+          } else {
+            this.categoryChildrenList = []
+          }
+        } else {
+          this.isLoading = false
+          this.options = []
+        }
+      })
+        .catch(() => {
+        this.isLoading = false
+      })
+        .finally(() => {
+        this.isLoading = false
+      })
+    },
+    beforeUpload(file) {
+      if (file && file.size / 1024 / 1024 > 5) {
+        notify.warning('Vui lòng chọn file không quá 5MB')
+        return
+      }
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        this.background = [{
+          uid: file.uid, // Unique ID của file
+          name: file.name,
+          status: "done",
+          url: e.target.result, // URL của ảnh
+        }]
+      };
+      reader.readAsDataURL(file);
+      return false; // Ngăn chặn hành động upload mặc định
+    },
+    removeImage() {
+      this.background = []
+    }
+  }
 }
 </script>
 
