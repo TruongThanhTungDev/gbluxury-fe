@@ -1,5 +1,5 @@
 import * as axios from "@/service/axios";
-import { NEW_URL } from "./constant";
+import { NEW_URL, UPLOAD_IMAGE } from "./constant";
 async function addNews(params) {
   return new Promise((resolve, reject) => {
     axios
@@ -42,4 +42,23 @@ async function getDetailNewsAdmin(id) {
       .catch((err) => reject(err));
   });
 }
-export { addNews, getNewsAdmin, getDetailNewsAdmin };
+
+async function uploadImageNews(file) {
+  const form = new FormData();
+  form.append("file", file);
+  console.log('form.get', form.get('file'));
+  return new Promise((resolve, reject) => {
+    axios
+      .POST_FILE(UPLOAD_IMAGE + "/upload", form)
+      .then((res) => {
+        if (res) {
+          resolve(res);
+        } else {
+          resolve(res);
+        }
+      })
+      .catch((err) => reject(err));
+  });
+}
+
+export { addNews, getNewsAdmin, getDetailNewsAdmin, uploadImageNews };

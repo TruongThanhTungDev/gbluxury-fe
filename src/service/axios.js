@@ -4,7 +4,7 @@ import { API_URL } from "@/api/constant";
 const instance = axios.create({
   baseURL: API_URL,
   timeout: 3000000,
-  headers: { "Content-Type": "application/json, text/plain" },
+  headers: { "Content-Type": "application/json" },
 });
 
 instance.interceptors.request.use;
@@ -35,6 +35,17 @@ async function POST(url, body, config = {}) {
     .then((res) => res)
     .catch((err) => err);
   return result;
+}
+
+async function POST_FILE(url, body) {
+  let result = instance.post(url, body, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  })
+  .then(res => res)
+  .catch(err => err)
+  return result
 }
 
 async function PUT(url, body) {
@@ -77,4 +88,4 @@ instance.interceptors.response.use(
   }
 );
 
-export { GET, PUT, POST, DELETE };
+export { GET, PUT, POST, DELETE, POST_FILE };

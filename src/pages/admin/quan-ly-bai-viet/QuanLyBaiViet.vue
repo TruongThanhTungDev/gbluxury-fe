@@ -70,6 +70,7 @@ export default {
   methods: {
     getData() {
       const payload = {
+        title: '',
         categoryId: '',
         page: this.page,
         size: this.size
@@ -111,7 +112,11 @@ export default {
             description,
             categoryId,
             image,
-            content
+            content,
+            refLinkReq: [{
+              link: "",
+              no: ""
+            }]
           }
           addNews(payload).then(res => {
             if (res && res.status === 200) {
@@ -151,7 +156,11 @@ export default {
             description,
             categoryId,
             image,
-            content
+            content,
+            refLinkReq: [{
+              link: "",
+              no: ""
+            }]
           }
           addNews(payload).then(res => {
             if (res && res.status === 200) {

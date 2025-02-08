@@ -1,6 +1,7 @@
-export const API_URL = "http://localhost:8082/api/v1/";
+export const API_URL = "http://localhost:8081/api/v1/";
 
 
 export const LOGIN_URL = 'user/login'
 export const CATEGORIES_URL = 'categories'
 export const NEW_URL = 'news'
+export const UPLOAD_IMAGE = 'ref_link'

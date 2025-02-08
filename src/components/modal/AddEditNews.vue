@@ -55,6 +55,7 @@
             @remove="removeImage"
             :fileList="background"
             list-type="picture-card"
+            :customRequest="uploadFile"
           >
             <p class="ant-upload-drag-icon">
               <inbox-outlined></inbox-outlined>
@@ -64,20 +65,22 @@
         </div>
       </div>
       <div class="col-span-2 overflow-auto">
-        <QuillEditor v-model:content="content" :options="editorOptions"/>
+        <QuillEditor ref="quillEditor" v-model:content="content" :options="editorOptions" @text-change="onEditorChange"/>
       </div>
     </div>
   </a-spin>
 </template>
 
 <script>
+import { v4 as uuidv4 } from 'uuid';
 import { Quill, QuillEditor } from '@vueup/vue-quill'
 import { Select, Input, UploadDragger, Spin } from "ant-design-vue";
 import { InboxOutlined } from '@ant-design/icons-vue';
 import { getChildrenById, getListCategoryParent } from '@/api/categories';
 import notify from '@/service/notify';
 import { toRaw } from 'vue';
-import { getDetailNewsAdmin } from '@/api/news';
+import { getDetailNewsAdmin, uploadImageNews } from '@/api/news';
+import { API_URL, UPLOAD_IMAGE } from '@/api/constant';
 export default {
   name: 'AddEditView',
   components: {
@@ -136,10 +139,12 @@ export default {
       background: [],
       content: '',
       options: null,
-      categoryChildrenList: []
+      categoryChildrenList: [],
+      uploadUrl: ''
     }
   },
   mounted() {
+    this.uploadUrl = API_URL + UPLOAD_IMAGE + "/upload"
     const Font = Quill.import('formats/font');
     Font.whitelist = ['montserrat'];
     Quill.register(Font, true);
@@ -213,21 +218,49 @@ export default {
         notify.warning('Vui lòng chọn file không quá 5MB')
         return
       }
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        this.background = [{
-          uid: file.uid, // Unique ID của file
-          name: file.name,
-          status: "done",
-          url: e.target.result, // URL của ảnh
-        }]
-      };
-      reader.readAsDataURL(file);
-      return false; // Ngăn chặn hành động upload mặc định
+      return true; // Ngăn chặn hành động upload mặc định
+    },
+    uploadFile(file) {
+      uploadImageNews(file.file).then(res => {
+        if (res.data.code === 200) {
+          this.background = [{
+            uid: file.file.uid, // Unique ID của file
+            name: file.file.name,
+            status: "done",
+            url: res.data.result, // URL của ảnh
+          }]
+        }
+      })
     },
     removeImage() {
       this.background = []
-    }
+    },
+    onEditorChange(delta) {
+      if (!delta) return
+      const ops = delta.delta.ops || []
+      const quill = this.$refs.quillEditor.getQuill()
+      ops.forEach(op => {
+        if (op.insert && typeof op.insert === 'object') {
+          if (op.insert.image && op.insert.image.includes('base64')) {
+            const base64String = op.insert.image.split(',')[1];
+            const mimeType = op.insert.image.split(',')[0].match(/:(.*?);/)[1]
+            const byteCharacters = atob(base64String);
+            const byteNumbers = new Array(byteCharacters.length).fill(0).map((_, i) => byteCharacters.charCodeAt(i));
+            const byteArray = new Uint8Array(byteNumbers);
+            const file = new File([byteArray], uuidv4() + '.png', { type: mimeType });
+            uploadImageNews(file).then(res => {
+              if (res.data.code === 200) {
+                const image = res.data.result
+                const range = quill.getSelection()
+                quill.insertEmbed(range.index, 'image', image)
+                quill.deleteText(range.index - 1, 1)
+                this.content = quill.editor.delta
+              }
+            })
+          }
+        }
+      })
+    },
   }
 }
 </script>

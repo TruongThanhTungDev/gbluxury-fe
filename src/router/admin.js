@@ -1,7 +1,7 @@
 export const routesAdmin = [
   {
     path: "/login",
-    meta: { title: "Login", requiresAuth: true },
+    meta: { title: "Login", requiresAuth: false },
     name: "LoginPage",
     component: () => import("@/pages/admin/login/LoginPage.vue"),
   },
