@@ -1,7 +1,7 @@
 <template>
-  <div class="card-item cursor-pointer border-b border-slate-300">
+  <div class="card-item cursor-pointer border-b border-slate-300" @click="viewNew(id)">
     <div class="card-small">
-      <img :src="require('@/assets/images/' +image)" class="w-full h-full object-cover" alt="">
+      <img :src="image" class="w-full h-full object-cover" alt="">
     </div>
     <div class="uppercase text-center text-xl font-[500]">
       {{ title }}
@@ -24,6 +24,15 @@ export default {
     description: {
       type: String,
       default: ''
+    },
+    id: {
+      type: String,
+      default: ''
+    }
+  },
+  methods: {
+    viewNew(id) {
+      this.$router.push('/bai-viet/' + id)
     }
   }
 }

@@ -3,7 +3,7 @@
     <div class="container my-0 mx-auto grid grid-cols-3">
       <div class="col-span-2">
         <div class="uppercase font-bold text-xl mb-4">
-          Công ty TNHH Kiến Trúc Và Xây Dựng HOMY Việt Nam
+          CÔNG TY TNHH KIẾN TRÚC XÂY DỰNG VÀ NỘI THẤT GIA BẢO
         </div>
         <div class="flex flex-col gap-2">
           <div>

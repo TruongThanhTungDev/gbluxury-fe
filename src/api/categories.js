@@ -16,6 +16,22 @@ async function getListCategoryParent() {
       });
   });
 }
+async function getListCategoryParentClient() {
+  return new Promise((resolve, reject) => {
+    axios
+      .GET(CATEGORIES_URL + "/client/tree", null)
+      .then((res) => {
+        if (res && res.length) {
+          resolve(res);
+        } else {
+          resolve(res);
+        }
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+}
 async function addNewCategoryChildren(params) {
   return new Promise((resolve, reject) => {
     axios.POST(CATEGORIES_URL + '/custom/create', params).then(res => {
@@ -72,10 +88,47 @@ async function getChildrenById(id) {
       .catch((err) => reject(err));
   });
 }
+async function searchCategory(params) {
+  return new Promise((resolve, reject) => {
+    axios
+      .GET(CATEGORIES_URL + "/search", params)
+      .then((res) => {
+        if (res) {
+          resolve(res);
+        } else {
+          resolve(res);
+        }
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+}
+
+async function searchCategoryByCode(params) {
+  return new Promise((resolve, reject) => {
+    axios
+      .GET(CATEGORIES_URL + "/tree/by-code", params)
+      .then((res) => {
+        if (res) {
+          resolve(res);
+        } else {
+          resolve(res);
+        }
+      })
+      .catch((err) => {
+        reject(err);
+      });
+  });
+}
+
 export {
   getListCategoryParent,
   addNewCategoryChildren,
   editCategoryChildren,
   deleteCategoryChildren,
   getChildrenById,
+  getListCategoryParentClient,
+  searchCategory,
+  searchCategoryByCode,
 };

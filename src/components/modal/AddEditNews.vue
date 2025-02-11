@@ -78,7 +78,6 @@ import { Select, Input, UploadDragger, Spin } from "ant-design-vue";
 import { InboxOutlined } from '@ant-design/icons-vue';
 import { getChildrenById, getListCategoryParent } from '@/api/categories';
 import notify from '@/service/notify';
-import { toRaw } from 'vue';
 import { getDetailNewsAdmin, uploadImageNews } from '@/api/news';
 import { API_URL, UPLOAD_IMAGE } from '@/api/constant';
 export default {
@@ -140,7 +139,8 @@ export default {
       content: '',
       options: null,
       categoryChildrenList: [],
-      uploadUrl: ''
+      uploadUrl: '',
+      isCategoryParent: false,
     }
   },
   mounted() {
@@ -150,18 +150,43 @@ export default {
     Quill.register(Font, true);
   },
   created() {
+    this.getDataCategories()
     if (this.mode === 'edit') {
       this.getDetailNews(this.data.id)
-    } else {
-      this.getDataCategories()
     }
   },
   methods: {
     getDetailNews(id) {
       this.isLoading = true
       getDetailNewsAdmin(id).then(res => {
-        console.log('res :>> ', res);
+        if (res) {
+          this.isLoading = false
+          const quill = this.$refs.quillEditor.getQuill()
+          this.description = res.description
+          this.categoryParent = res.categoryRes.parentCategory.id
+          this.categoryChild = res.categoryRes.id
+          this.title = res.title
+          const delta = quill.clipboard.convert(res.content)
+          this.content = delta
+          if (res.image) {
+            const imageUrlArrSplit = res.image.split("/")
+            if (imageUrlArrSplit.length) {
+              const fileNameSv = imageUrlArrSplit[imageUrlArrSplit.length - 1]
+              let fileName = fileNameSv.replace("admin_", "")
+              fileName = fileName.slice(0, fileName.length - 1 - 14)
+              this.background = [{
+                uid: uuidv4(),
+                name: fileName,
+                status: 'done',
+                url: res.image
+              }]
+            }
+          }
+        } else {
+          this.isLoading = false
+        }
       })
+      .finally(() => this.isLoading = false) 
     },
     getDataCategories() {
       this.isLoading = true 
@@ -173,8 +198,7 @@ export default {
             title: item.title
           }))
           if (this.data) {
-            const data = toRaw(this.data)
-            console.log('data :>> ', data);
+            this.getCategoriesChildren()
           }
         } else {
           this.isLoading = false

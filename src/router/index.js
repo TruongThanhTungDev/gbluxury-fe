@@ -40,7 +40,7 @@ const routes = [
         component: () => import("@/pages/gioi-thieu/GioiThieuPage.vue"),
       },
       {
-        path: "/thiet-ke-noi-that",
+        path: "/thiet-ke-noi-that/:name?",
         name: "ThietKeNoiThatPage",
         meta: {
           title: "Thiết kế nội thất",
@@ -49,7 +49,7 @@ const routes = [
           import("@/pages/thiet-ke-noi-that/ThietKeNoiThatPage.vue"),
       },
       {
-        path: "/cong-trinh",
+        path: "/cong-trinh/:name?",
         name: "CongTrinhPage",
         meta: {
           title: "Công trình",
@@ -68,9 +68,17 @@ const routes = [
         path: "/lien-he",
         name: "LienHePage",
         meta: {
-          title: "Liên hê",
+          title: "Liên hệ",
         },
         component: () => import("@/pages/lien-he/LienHePage.vue"),
+      },
+      {
+        path: "/bai-viet/:id?",
+        name: "ChiTietBaiViet",
+        meta: {
+          title: "Chi tiết bài viết",
+        },
+        component: () => import("@/pages/chi-tiet-bai-viet/ChiTietBaiViet.vue"),
       },
     ],
   },

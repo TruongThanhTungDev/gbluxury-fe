@@ -14,6 +14,20 @@ async function addNews(params) {
       .catch((err) => reject(err));
   });
 }
+async function editNews(params, id) {
+  return new Promise((resolve, reject) => {
+    axios
+      .PUT(NEW_URL + "/custom/update?newsId=" + id, params)
+      .then((res) => {
+        if (res) {
+          resolve(res);
+        } else {
+          resolve(res);
+        }
+      })
+      .catch((err) => reject(err));
+  });
+}
 async function getNewsAdmin(params) {
   return new Promise((resolve, reject) => {
     axios
@@ -28,10 +42,53 @@ async function getNewsAdmin(params) {
       .catch((err) => reject(err));
   });
 }
+async function getNewsClient(params) {
+  return new Promise((resolve, reject) => {
+    axios
+      .GET(NEW_URL + "/client/search/custom", params)
+      .then((res) => {
+        if (res) {
+          resolve(res);
+        } else {
+          resolve(res);
+        }
+      })
+      .catch((err) => reject(err));
+  });
+}
 async function getDetailNewsAdmin(id) {
   return new Promise((resolve, reject) => {
     axios
-      .GET(NEW_URL + "/detail?id=" + id, "")
+      .GET(NEW_URL + "/detail/custom?id=" + id, "")
+      .then((res) => {
+        if (res) {
+          resolve(res);
+        } else {
+          resolve(res);
+        }
+      })
+      .catch((err) => reject(err));
+  });
+}
+async function getDetailNewsClient(id) {
+  return new Promise((resolve, reject) => {
+    axios
+      .GET(NEW_URL + "/client/detail/custom?id=" + id, "")
+      .then((res) => {
+        if (res) {
+          resolve(res);
+        } else {
+          resolve(res);
+        }
+      })
+      .catch((err) => reject(err));
+  });
+}
+
+async function deleteNew(id) {
+  return new Promise((resolve, reject) => {
+    axios
+      .DELETE(NEW_URL + "/delete?id=" + id, "")
       .then((res) => {
         if (res) {
           resolve(res);
@@ -61,4 +118,13 @@ async function uploadImageNews(file) {
   });
 }
 
-export { addNews, getNewsAdmin, getDetailNewsAdmin, uploadImageNews };
+export {
+  addNews,
+  getNewsAdmin,
+  getDetailNewsAdmin,
+  uploadImageNews,
+  editNews,
+  getNewsClient,
+  deleteNew,
+  getDetailNewsClient,
+};

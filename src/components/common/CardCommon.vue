@@ -4,7 +4,14 @@
       <div :class="`w-full relative card-hover ${height}`">
         <div v-if="mode" class="card-mask"></div>
         <img
+          v-if="!isCustom"
           :src="require('@/assets/images/' +image)"
+          alt=""
+          class="w-full h-full object-cover mb-2"
+        />
+        <img
+          v-else
+          :src="image"
           alt=""
           class="w-full h-full object-cover mb-2"
         />
@@ -53,6 +60,10 @@ export default {
     mode: {
       type: Boolean,
       default: true
+    },
+    isCustom: {
+      type: Boolean,
+      default: false
     }
   }
 }

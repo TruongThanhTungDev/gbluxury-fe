@@ -1,7 +1,7 @@
 <template>
   <div class="flex items-center gap-4 border-b pb-8 border-slate-300">
     <div class="card-new">
-      <img :src="require('@/assets/images/' +image)" class="w-full h-full object-cover" alt="">
+      <img :src="image" class="w-full h-full object-cover" alt="">
     </div>
     <div>
       <div class="text-xl font-[500]">

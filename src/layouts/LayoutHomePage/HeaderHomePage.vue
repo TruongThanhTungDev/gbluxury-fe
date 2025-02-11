@@ -24,24 +24,21 @@
           <router-link to="/">
             <img src="../../assets/logo.png" alt="" width="60" />
           </router-link>
-          <!-- <div v-else class="h-[60px] ">
-
-          </div> -->
         </div>
         <div class="flex gap-6">
           <div v-for="item in navbarList" :key="item.name">
-            <router-link v-if="item.key !== 2 && item.key !== 3" :to="item.path" class="uppercase text-xl mx-2 px-2 navbar-menu">
-              {{ item.name }}
+            <router-link v-if="item.name === 'gioi-thieu' || item.name === 'lien-he'" :to="item.path" class="uppercase text-xl mx-2 px-2 navbar-menu">
+              {{ item.title }}
             </router-link>
             <a-dropdown v-else>
               <router-link :to="item.path" class="uppercase text-xl mx-2 px-2 navbar-menu">
-                {{ item.name }}
+                {{ item.title }}
               </router-link>
-              <template #overlay>
+              <template #overlay v-if="item.subCategories.length">
                 <a-menu>
-                  <a-menu-item v-for="child in item.children" :key="child.name">
+                  <a-menu-item v-for="child in item.subCategories" :key="child.name">
                     <router-link :to="child.path">
-                      {{ child.name }}
+                      {{ child.title }}
                     </router-link>
                   </a-menu-item>
                 </a-menu>
@@ -55,67 +52,13 @@
 </template>
 
 <script>
+import { getListCategoryParentClient } from '@/api/categories';
+
 export default {
   name: "HeaderComponent",
   data() {
     return {
       navbarList: [
-        {
-          key: 1,
-          name: 'Giới thiệu',
-          path: "/gioi-thieu",
-          children: []
-        },
-        {
-          key: 2,
-          name: 'Thiết kế nội thất',
-          path: '/thiet-ke-noi-that',
-          children: [
-            {
-              name: 'Nội thất chung cư, PENHOUSE',
-              path: '/thiet-ke-noi-that'
-            },
-            {
-              name: 'Nội thất biệt thự, nhà phố',
-              path: '/thiet-ke-noi-that'
-            },
-            {
-              name: 'Nội thất văn phòng',
-              path: '/thiet-ke-noi-that'
-            },
-            {
-              name: 'Nội thất khách sạn',
-              path: '/thiet-ke-noi-that'
-            }
-          ]
-        },
-        {
-          key: 3,
-          name: 'Công trình',
-          path: '/cong-trinh',
-          children: [
-            {
-              name: 'Công trình thực tế',
-              path: '/cong-trinh'
-            },
-            {
-              name: 'Không gian công cộng',
-              path: '/cong-trinh'
-            }
-          ]
-        },
-        {
-          key: 4,
-          name: 'Tin tức',
-          path: '/tin-tuc',
-          children: []
-        },
-        {
-          key: 5,
-          name: 'Liên hệ',
-          path: '/lien-he',
-          children: []
-        }
       ],
       isShowLogo: false
     };
@@ -148,12 +91,20 @@ export default {
     });
   },
   created() {
+    this.getCategory()
   },
   unmounted() {
   },
   methods: {
     toRouter() {
       this.$router.push('/')
+    },
+    getCategory() {
+      getListCategoryParentClient().then(res => {
+        if (res && res.length) {
+          this.navbarList = res
+        }
+      })
     }
   }
 };
