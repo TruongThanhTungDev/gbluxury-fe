@@ -1,4 +1,4 @@
-export const API_URL = "http://localhost:8081/api/v1/";
+export const API_URL = "http://103.56.163.94:8081/api/v1/";
 
 
 export const LOGIN_URL = 'user/login'
