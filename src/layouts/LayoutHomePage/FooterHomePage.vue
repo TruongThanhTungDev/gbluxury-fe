@@ -1,6 +1,6 @@
 <template>
-  <div class="bg-black text-white py-14">
-    <div class="container my-0 mx-auto grid grid-cols-3">
+  <div class="bg-black text-white py-14 lg:px-0 px-6">
+    <div class="container my-0 mx-auto grid lg:grid-cols-3 grid-cols-1">
       <div class="col-span-2">
         <div class="uppercase font-bold text-xl mb-4">
           CÔNG TY TNHH KIẾN TRÚC XÂY DỰNG VÀ NỘI THẤT GIA BẢO

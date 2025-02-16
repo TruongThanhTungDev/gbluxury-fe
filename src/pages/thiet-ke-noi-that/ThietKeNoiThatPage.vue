@@ -1,10 +1,15 @@
 <template>
   <div class="container my-0 mx-auto">
-    <div class="uppercase font-bold text-4xl mb-4 text-center">
+    <div class="uppercase font-bold md:text-4xl text-2xl mb-4 text-center">
       {{ title ? title : 'THIẾT KẾ NỘI THẤT' }}
     </div>
-    <div class="container-list mb-4">
+    <div v-if="listData.length" class="md:container-list md:px-0 px-6 flex flex-col justify-center items-center gap-6 mb-4">
       <CardCommonChild v-for="(item, index) in listData" :key="index" :title="item.title" :image="item.image" :id="item.id"/>
+    </div>
+    <div v-else class="flex justify-between gap-6 mb-4">
+      <a-skeleton style="width: 400px; height: 200px;" :size="200"/>
+      <a-skeleton style="width: 400px; height: 200px;" :size="200"/>
+      <a-skeleton style="width: 400px; height: 200px;" :size="200"/>
     </div>
     <div class="text-center">
       <a-pagination v-model:current="page" :total="totalItems" show-less-items @change="getData" :defaultPageSize="20"/>

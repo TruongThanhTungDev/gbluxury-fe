@@ -19,7 +19,7 @@
           <i class="fa-solid fa-arrow-right text-3xl text-white"></i>
         </div>
       </div>
-      <div :class="`${sizeTitle} uppercase text-2xl text-justify mx-1`">
+      <div :class="`${sizeTitle} uppercase text-justify mx-1`">
         {{ title }}
       </div>
       <div :class="`mx-1 text-justify font-[300] ${sizeDescription}`">
@@ -47,15 +47,15 @@ export default {
     },
     height: {
       type: String,
-      default: 'h-[500px]'
+      default: 'md:h-[500px]'
     },
     sizeTitle: {
       type: String,
-      default: 'text-2xl'
+      default: 'md:text-2xl'
     },
     sizeDescription: {
       type: String,
-      default: 'text-xl'
+      default: 'md:text-xl'
     },
     mode: {
       type: Boolean,

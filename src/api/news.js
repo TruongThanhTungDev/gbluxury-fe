@@ -88,7 +88,7 @@ async function getDetailNewsClient(id) {
 async function deleteNew(id) {
   return new Promise((resolve, reject) => {
     axios
-      .DELETE(NEW_URL + "/delete?id=" + id, "")
+      .DELETE(NEW_URL + "/custom/delete?newsId=" + id, "")
       .then((res) => {
         if (res) {
           resolve(res);

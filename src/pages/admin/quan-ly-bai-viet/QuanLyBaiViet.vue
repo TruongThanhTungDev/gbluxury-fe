@@ -216,7 +216,8 @@ export default {
         okText: "Lưu",
         onOk: () => {
           deleteNew(data.id).then(res => {
-            if (res.data.code === 200) {
+            console.log(res)
+            if (res.status === 200) {
               notify.success('Xóa bài viết thành công')
               this.getData()
             }

@@ -1,7 +1,10 @@
 <template>
   <div class="container my-0 mx-auto">
     <div v-if="data">
-      <div v-html="data.content"></div>
+      <div class="ql-editor" v-html="data.content"></div>
+    </div>
+    <div v-else>
+      <a-skeleton />
     </div>
   </div>
 </template>

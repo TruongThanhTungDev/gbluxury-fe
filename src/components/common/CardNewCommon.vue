@@ -1,6 +1,6 @@
 <template>
-  <div class="flex items-center gap-4 border-b pb-8 border-slate-300">
-    <div class="card-new">
+  <div class="flex md:flex-row flex-col justify-center items-center gap-4 border-b pb-8 border-slate-300">
+    <div class="md:h-[375px] md:w-full">
       <img :src="image" class="w-full h-full object-cover" alt="">
     </div>
     <div>

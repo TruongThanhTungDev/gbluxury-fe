@@ -1,6 +1,6 @@
 <template>
-  <div class="container my-0 mx-auto">
-    <div class="uppercase font-bold text-4xl mb-4 text-center">
+  <div class="container my-0 mx-auto md:px-0 px-6">
+    <div class="uppercase font-bold md:text-4xl text-2xl mb-4 text-center">
       LIÊN HỆ
     </div>
     <div class="mb-4">

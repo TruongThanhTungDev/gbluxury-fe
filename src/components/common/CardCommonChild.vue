@@ -1,9 +1,9 @@
 <template>
-  <div class="card-item cursor-pointer border-b border-slate-300" @click="viewNew(id)">
-    <div class="card-small">
+  <div class="md:card-item cursor-pointer border-b border-slate-300" @click="viewNew(id)">
+    <div class="md:card-small">
       <img :src="image" class="w-full h-full object-cover" alt="">
     </div>
-    <div class="uppercase text-center text-xl font-[500]">
+    <div class="uppercase text-center md:text-xl font-[500]">
       {{ title }}
     </div>
   </div>

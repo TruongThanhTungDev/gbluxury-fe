@@ -163,8 +163,14 @@ export default {
           this.isLoading = false
           const quill = this.$refs.quillEditor.getQuill()
           this.description = res.description
-          this.categoryParent = res.categoryRes.parentCategory.id
-          this.categoryChild = res.categoryRes.id
+          if (res.categoryRes) {
+            if (res.categoryRes.parentCategory) {
+              this.categoryParent = res.categoryRes.parentCategory.id
+              this.categoryChild = res.categoryRes.id
+            } else {
+              this.categoryParent = res.categoryRes.id
+            }
+          }
           this.title = res.title
           const delta = quill.clipboard.convert(res.content)
           this.content = delta

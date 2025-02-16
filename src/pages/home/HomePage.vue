@@ -3,10 +3,10 @@
     <div v-for="(item, index) in listBaiViet" :key="item.id" class="py-14 px-16" :class="index % 2 === 0 ? 'bg-white' : 'bg-[#f9f9f9]'">
       <div>
         <div class="text-center mb-4">
-          <div class="text-black font-[600] mb-1 text-4xl uppercase">{{ item.categoryRes.title }}</div>
+          <div class="text-black font-[600] mb-1 md:text-4xl text-2xl uppercase">{{ item.categoryRes.title }}</div>
           <div class="underline cursor-pointer uppercase" @click="viewAll(item.categoryRes.path)">XEM TẤT CẢ</div>
         </div>
-        <div class="grid grid-cols-2 gap-10">
+        <div class="grid lg:grid-cols-2 grid-cols-1 gap-10">
           <card-common v-for="el in item.newsRes" :key="el.id" :title="el.title" :description="el.description" :image="el.image" :isCustom="true" @click="viewNew(el.id)"></card-common>
         </div>
       </div>

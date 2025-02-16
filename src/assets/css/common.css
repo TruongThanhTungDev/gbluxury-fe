@@ -6,6 +6,18 @@
 .ant-pagination-item {
   border-radius: 0!important;
 }
+.slide-down-block {
+  transition: all .5s ease-in-out;
+  max-height: 100vh;
+  overflow: hidden;
+  will-change: transform;
+}
+.slide-down-none {
+  transition: all .5s ease-in-out;
+  max-height: 0;
+  overflow: hidden;
+  will-change: transform;
+}
 .ant-pagination-item-active {
   border: 1px solid black!important;
   background-color: black!important;

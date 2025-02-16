@@ -1,7 +1,7 @@
 <template>
   <div class="relative shadow">
-    <div class="bg-black">
-      <div class="container text-white my-0 mx-auto py-2 flex justify-between">
+    <div class="bg-black lg:px-0 px-6">
+      <div class="container text-white my-0 mx-auto py-2 sm:flex sm:justify-between text-center">
         <div>CÔNG TY TNHH KIẾN TRÚC XÂY DỰNG VÀ NỘI THẤT GIA BẢO</div>
         <div>
           FANPAGE:
@@ -16,7 +16,7 @@
       <img src="../../assets/images/Phong-lam-viec-banner.jpg.webp" class="h-full w-full object-cover" alt="">
       <img src="../../assets/logo.png" alt="" id="logo-banner" :class="isShowLogo ? 'logo-header-banner-fixed' : 'logo-header-banner'" @click="toRouter">
     </div>
-    <div class="bg-white shadow">
+    <div class="bg-white shadow lg:px-0 px-6">
       <div
         class="container my-0 mx-auto flex items-center justify-between py-2"
       >
@@ -25,26 +25,43 @@
             <img src="../../assets/logo.png" alt="" width="60" />
           </router-link>
         </div>
-        <div class="flex gap-6">
-          <div v-for="item in navbarList" :key="item.name">
-            <router-link v-if="item.name === 'gioi-thieu' || item.name === 'lien-he'" :to="item.path" class="uppercase text-xl mx-2 px-2 navbar-menu">
-              {{ item.title }}
-            </router-link>
-            <a-dropdown v-else>
-              <router-link :to="item.path" class="uppercase text-xl mx-2 px-2 navbar-menu">
+        <div class="show-menu">
+          <div class="flex gap-6">
+            <div v-for="item in navbarList" :key="item.name">
+              <router-link v-if="item.name === 'gioi-thieu' || item.name === 'lien-he'" :to="item.path" class="uppercase text-xl mx-2 px-2 navbar-menu">
                 {{ item.title }}
               </router-link>
-              <template #overlay v-if="item.subCategories.length">
-                <a-menu>
-                  <a-menu-item v-for="child in item.subCategories" :key="child.name">
-                    <router-link :to="child.path">
-                      {{ child.title }}
-                    </router-link>
-                  </a-menu-item>
-                </a-menu>
-              </template>
-            </a-dropdown>
+              <a-dropdown v-else>
+                <router-link :to="item.path" class="uppercase text-xl mx-2 px-2 navbar-menu">
+                  {{ item.title }}
+                </router-link>
+                <template #overlay v-if="item.subCategories.length">
+                  <a-menu>
+                    <a-menu-item v-for="child in item.subCategories" :key="child.name">
+                      <router-link :to="child.path">
+                        {{ child.title }}
+                      </router-link>
+                    </a-menu-item>
+                  </a-menu>
+                </template>
+              </a-dropdown>
+            </div>
           </div>
+        </div>
+        <div class="show-menu-drawer">
+          <a-button :size="'large'" @click="showDrawer">
+            <template #icon>
+              <MenuOutlined />
+            </template>
+          </a-button>
+          <a-drawer
+            title=""
+            placement="right"
+            :closable="true"
+            v-model:visible="isShowMenu"
+          >
+            <menu-common :data="navbarList" @close="showDrawer"/>
+          </a-drawer>
         </div>
       </div>
     </div>
@@ -53,14 +70,20 @@
 
 <script>
 import { getListCategoryParentClient } from '@/api/categories';
-
+import { MenuOutlined } from '@ant-design/icons-vue';
+import MenuCommon from '@/components/common/MenuCommon.vue';
 export default {
   name: "HeaderComponent",
+  components: {
+    MenuOutlined,
+    MenuCommon
+  },
   data() {
     return {
       navbarList: [
       ],
-      isShowLogo: false
+      isShowLogo: false,
+      isShowMenu: false,
     };
   },
   computed: {
@@ -105,6 +128,12 @@ export default {
           this.navbarList = res
         }
       })
+    },
+    showDrawer() {
+      this.isShowMenu = !this.isShowMenu
+    },
+    titleClick() {
+      console.log('123 :>> ', 123);
     }
   }
 };

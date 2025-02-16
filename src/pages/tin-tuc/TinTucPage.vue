@@ -1,10 +1,15 @@
 <template>
   <div class="container my-0 mx-auto">
-    <div class="uppercase font-bold text-4xl mb-4 text-center">
+    <div class="uppercase font-bold md:text-4xl text-2xl mb-4 text-center">
       TIN TỨC
     </div>
-    <div class="container-new mb-4">
-      <CardNewCommon v-for="(item, index) in listData" :key="index" :title="item.title" :description="item.description" :image="item.image" :id="item.id"/>
+    <div v-if="listData.length" class="md:flex md:flex-col md:w-[70%] md:px-0 px-6 flex flex-col justify-center items-center gap-6 mb-4">
+      <CardNewCommon v-for="(item, index) in listData" :key="index" :title="item.title" :description="item.description" :image="item.image" :id="item.id" @click="viewNew(item.id)"/>
+    </div>
+    <div v-else>
+      <a-skeleton style="width: 400px; height: 200px;" :size="200"/>
+      <a-skeleton style="width: 400px; height: 200px;" :size="200"/>
+      <a-skeleton style="width: 400px; height: 200px;" :size="200"/>
     </div>
     <div class="text-center">
       <a-pagination v-model:current="page" :total="totalItems" show-less-items @change="getData" :defaultPageSize="20"/>
@@ -74,7 +79,10 @@ export default {
           this.title = res.title
         }
       })
-    }
+    },
+    viewNew(id) {
+      this.$router.push('/bai-viet/' + id)
+    },
   }
 }
 </script>
