@@ -13,7 +13,7 @@
             Thời gian làm việc: 8h00 - 19h00 tất cả các ngày trong tuần
           </div>
           <div class="flex gap-2">
-            Hotline: <a href="tel:+84915250666" class="phone-number">0915 250 666</a>  |  <a  href="tel:+84948967696" class="phone-number">0948 967 696</a>
+            Hotline: <a href="tel:+84379595558" class="phone-number">0379 595 558</a>  |  <a  href="tel:+84948967696" class="phone-number">0948 967 696</a>
           </div>
           <div>
             Email: <span class="underline">gbhome8888@gmai.com</span>

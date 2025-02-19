@@ -2,11 +2,11 @@
   <div class="relative shadow">
     <div class="bg-black lg:px-0 px-6">
       <div class="container text-white my-0 mx-auto py-2 sm:flex sm:justify-between text-center">
-        <div>CÔNG TY TNHH KIẾN TRÚC XÂY DỰNG VÀ NỘI THẤT GIA BẢO</div>
+        <div>GIA BẢO LUXURY INTERIOR</div>
         <div>
-          FANPAGE:
-          <a href="https://www.facebook.com/gbluxury.vn" target="_blank"
-            >www.facebook.com/gbluxury.vn</a
+          HOTLINE:
+          <a href="tel:+84948967696"
+            >0379 595 558</a
           >
         </div>
       </div>
@@ -16,7 +16,7 @@
       <img src="../../assets/images/Phong-lam-viec-banner.jpg.webp" class="h-full w-full object-cover" alt="">
       <img src="../../assets/logo.png" alt="" id="logo-banner" :class="isShowLogo ? 'logo-header-banner-fixed' : 'logo-header-banner'" @click="toRouter">
     </div>
-    <div class="bg-white shadow lg:px-0 px-6">
+    <div class="bg-white shadow lg:px-0 px-6" :class="isScroll ? 'navbar-container-lg navbar-container' : ''">
       <div
         class="container my-0 mx-auto flex items-center justify-between py-2"
       >
@@ -84,6 +84,7 @@ export default {
       ],
       isShowLogo: false,
       isShowMenu: false,
+      isScroll: false
     };
   },
   computed: {
@@ -97,8 +98,10 @@ export default {
     window.addEventListener('scroll', () => {
       if (window.scrollY >= 825) {
         this.isShowLogo = true 
+        this.isScroll = true
       } else {
         this.isShowLogo = false
+        this.isScroll = false
       }
       let newTop = initialTop + scrollY * 0.05;
       let newWidth = maxWidth - scrollY * 0.1 ;
@@ -154,7 +157,7 @@ export default {
   background: black;
   opacity: 0.3;
 }
-.navbar-container {
+.navbar-container-lg .navbar-container {
   position: relative;
 }
 .logo-header-banner {
@@ -170,17 +173,21 @@ export default {
   top: 60px!important;
   left: 50%;
   transform: translate(-50%,-50%);
-  z-index: 1;
+  z-index: 10;
   animation: fade-in 0.3s ease-in-out;
   cursor: pointer;
 }
-.navbar-container {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 100;
-  background: white;
-  box-shadow: 4px 4px 6px 0px #47474770
+
+@media screen and (max-width: 999px) {
+  .navbar-container-lg.navbar-container {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    background: white;
+    z-index: 1;
+    box-shadow: 4px 4px 6px 0px #47474770
+  }
 }
 @keyframes fade-in {
   0% {

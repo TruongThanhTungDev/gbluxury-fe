@@ -50,16 +50,21 @@
           </li>
         </ul>
       </div>
-      <div class="md:text-4xl text-2xl uppercase font-bold text-center mb-4">
-        Đội ngũ hoạt động
-      </div>
+    </div>
+    <div class="bg-[#f9f9f9] py-14 px-16">
+      <CostTableDesign/>
     </div>
   </div>
 </template>
 
 <script>
+import CostTableDesign from '@/components/common/CostTableDesign.vue';
+
 export default {
-  name: 'GioiThieuPage'
+  name: 'GioiThieuPage',
+  components: {
+    CostTableDesign
+  }
 }
 </script>
 

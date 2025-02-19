@@ -6,14 +6,21 @@
     <div v-else>
       <a-skeleton />
     </div>
+    <div class="bg-white py-14 px-16">
+      <CostTableDesign/>
+    </div>
   </div>
 </template>
 
 <script>
 import { getDetailNewsClient } from '@/api/news';
+import CostTableDesign from '@/components/common/CostTableDesign.vue';
 
 export default {
   name: 'ChiTietBaiViet',
+  components: {
+    CostTableDesign
+  },
   data() {
     return {
       data: null

@@ -14,6 +14,9 @@
     <div class="text-center">
       <a-pagination v-model:current="page" :total="totalItems" show-less-items @change="getData" :defaultPageSize="20"/>
     </div>
+    <div class="bg-[#f9f9f9] py-14 px-16">
+      <cost-table-design/>
+    </div>
   </div>
 </template>
 
@@ -21,11 +24,13 @@
 import { searchCategoryByCode } from '@/api/categories';
 import { getNewsClient } from '@/api/news';
 import CardCommonChild from '@/components/common/CardCommonChild.vue';
+import CostTableDesign from '@/components/common/CostTableDesign.vue';
 
 export default {
   name: 'ThietKeNoiThatPage',
   components: {
-    CardCommonChild
+    CardCommonChild,
+    CostTableDesign
   },
   data() {
     return {
