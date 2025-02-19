@@ -17,7 +17,7 @@
       >
         <div>
           <router-link to="/">
-            <img src="../../assets/logo.png" alt="" width="60" />
+            <img src="../../assets/logo3.png" alt="" width="120" />
           </router-link>
         </div>
         <div class="show-menu">

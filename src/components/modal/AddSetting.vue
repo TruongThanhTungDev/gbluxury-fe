@@ -69,7 +69,9 @@
           </template>
         </a-table>
         <div class="text-end">
-          <a-pagination v-model:current="page" :total="50" show-less-items />
+          <div>
+            <a-pagination v-model:current="page" :total="totalItems" show-less-items @change="getData" :defaultPageSize="size"/>
+          </div>
         </div>
       </div>
       <div>
