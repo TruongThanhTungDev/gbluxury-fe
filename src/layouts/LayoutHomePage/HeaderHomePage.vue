@@ -5,16 +5,19 @@
         <div>GIA BẢO LUXURY INTERIOR</div>
         <div>
           HOTLINE:
-          <a href="tel:+84948967696"
+          <a href="tel:+84379595558"
             >0379 595 558</a
           >
         </div>
       </div>
     </div>
-    <div class="w-full h-[800px] relative">
-      <div class="background-header"></div>
-      <img src="../../assets/images/Phong-lam-viec-banner.jpg.webp" class="h-full w-full object-cover" alt="">
-      <img src="../../assets/logo.png" alt="" id="logo-banner" :class="isShowLogo ? 'logo-header-banner-fixed' : 'logo-header-banner'" @click="toRouter">
+    <div class="w-full img-background-container relative">
+      <div class="background-header z-[1]"></div>
+      <!-- <img src="../../assets/images/Phong-lam-viec-banner.jpg.webp" class="h-full w-full object-cover" alt=""> -->
+      <a-carousel class="w-full">
+        <img v-for="item of listCarousel" :key="item" :src="require(`../../assets/images/${item}`)"  alt="back" class="img-background-container w-full object-cover">
+      </a-carousel>
+      <img src="../../assets/logo.png" alt="" id="logo-banner" class="z-[2]" :class="isShowLogo ? 'logo-header-banner-fixed' : 'logo-header-banner'" @click="toRouter">
     </div>
     <div class="bg-white shadow lg:px-0 px-6" :class="isScroll ? 'navbar-container-lg navbar-container' : ''">
       <div
@@ -84,7 +87,17 @@ export default {
       ],
       isShowLogo: false,
       isShowMenu: false,
-      isScroll: false
+      isScroll: false,
+      listCarousel: [
+        'crs0.png',
+        'crs5.png',
+        'crs4.png',
+        'crs2.png',
+        'crs1.png',
+        'crs3.png',
+        'crs6.png',
+        'crs7.png'
+      ]
     };
   },
   computed: {
@@ -191,6 +204,14 @@ export default {
   }
   .logo-header-banner-fixed {
     display: none
+  }
+}
+.img-background-container {
+  height: 800px;
+}
+@media screen and (max-width: 500px) {
+  .img-background-container {
+    height: 400px;
   }
 }
 @keyframes fade-in {

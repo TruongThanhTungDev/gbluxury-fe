@@ -2,11 +2,11 @@
   <div>
     <div class="bg-black lg:px-0 px-6">
       <div class="container text-white my-0 mx-auto py-2 sm:flex sm:justify-between text-center">
-        <div>CÔNG TY TNHH KIẾN TRÚC XÂY DỰNG VÀ NỘI THẤT GIA BẢO</div>
+        <div>GIA BẢO LUXURY INTERIOR</div>
         <div>
-          FANPAGE:
-          <a target="_blank" href="https://www.facebook.com/gbluxury.vn"
-            >www.facebook.com/gbluxury.vn</a
+          HOTLINE:
+          <a href="tel:+84379595558"
+            >0379 595 558</a
           >
         </div>
       </div>

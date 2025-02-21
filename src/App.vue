@@ -8,6 +8,14 @@
 
 export default {
   name: 'App',
+  mounted() {
+    document.addEventListener('contextmenu', this.disableRightClick);
+  },
+  methods: {
+    disableRightClick(event) {
+      event.preventDefault();
+    },
+  },
 }
 </script>
 
