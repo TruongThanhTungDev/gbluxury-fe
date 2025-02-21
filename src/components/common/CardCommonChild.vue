@@ -1,6 +1,6 @@
 <template>
-  <div class="md:card-item cursor-pointer border-b border-slate-300" @click="viewNew(id)">
-    <div class="md:card-small">
+  <div class="card-item cursor-pointer border-b border-slate-300" @click="viewNew(id)">
+    <div class="card-small">
       <img :src="image" class="w-full h-full object-cover" alt="">
     </div>
     <div class="uppercase text-center md:text-xl font-[500]">
@@ -39,15 +39,17 @@ export default {
 </script>
 
 <style scoped>
-.card-small {
-  height: 375px;
-  width: 100%;
-  margin-bottom: 16px;
-}
-.card-item {
-  width: calc(33.333% - 16px); /* Chiều rộng mỗi item là 1/3 trừ khoảng cách */
-  box-sizing: border-box; /* Đảm bảo padding không ảnh hưởng đến kích thước */
-  text-align: center;
-  padding: 10px;
+@media screen and (min-width: 1000px) {
+  .card-small {
+    height: 375px;
+    width: 100%;
+    margin-bottom: 16px;
+  }
+  .card-item {
+    width: calc(33.333% - 16px); /* Chiều rộng mỗi item là 1/3 trừ khoảng cách */
+    box-sizing: border-box; /* Đảm bảo padding không ảnh hưởng đến kích thước */
+    text-align: center;
+    padding: 10px;
+  } 
 }
 </style>

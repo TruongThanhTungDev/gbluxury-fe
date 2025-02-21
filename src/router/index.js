@@ -40,10 +40,19 @@ const routes = [
         component: () => import("@/pages/gioi-thieu/GioiThieuPage.vue"),
       },
       {
-        path: "/thiet-ke-noi-that/:name?",
+        path: "/kien-truc/:name?",
+        name: "KienTrucPage",
+        meta: {
+          title: "Kiến trúc",
+        },
+        component: () =>
+          import("@/pages/thiet-ke-noi-that/ThietKeNoiThatPage.vue"),
+      },
+      {
+        path: "/noi-that/:name?",
         name: "ThietKeNoiThatPage",
         meta: {
-          title: "Thiết kế nội thất",
+          title: "Nội thất",
         },
         component: () =>
           import("@/pages/thiet-ke-noi-that/ThietKeNoiThatPage.vue"),

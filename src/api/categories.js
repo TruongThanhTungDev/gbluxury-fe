@@ -108,7 +108,7 @@ async function searchCategory(params) {
 async function searchCategoryByCode(params) {
   return new Promise((resolve, reject) => {
     axios
-      .GET(CATEGORIES_URL + "/tree/by-code", params)
+      .GET(CATEGORIES_URL + "/client/tree/by-code", params)
       .then((res) => {
         if (res) {
           resolve(res);

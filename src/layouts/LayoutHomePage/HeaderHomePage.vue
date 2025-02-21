@@ -104,7 +104,7 @@ export default {
         this.isScroll = false
       }
       let newTop = initialTop + scrollY * 0.05;
-      let newWidth = maxWidth - scrollY * 0.2 ;
+      let newWidth = maxWidth - scrollY * 0.1 ;
       if (newTop > maxTop) {
         newTop = maxTop;
       } else if (scrollY === 0) {
@@ -170,13 +170,13 @@ export default {
 }
 .logo-header-banner-fixed {
   position: fixed;
-  top: 40px!important;
+  top: 60px!important;
   left: 50%;
   transform: translate(-50%,-50%);
   z-index: 10;
   animation: fade-in 0.3s ease-in-out;
   cursor: pointer;
-  width: 65px!important;
+  /* width: 65px!important; */
 }
 
 @media screen and (max-width: 999px) {
@@ -190,8 +190,7 @@ export default {
     box-shadow: 4px 4px 6px 0px #47474770
   }
   .logo-header-banner-fixed {
-    top: 100px!important;
-    width: 60px!important;
+    display: none
   }
 }
 @keyframes fade-in {

@@ -3,7 +3,7 @@
     <div class="uppercase font-bold md:text-4xl text-2xl mb-4 text-center">
       TIN TỨC
     </div>
-    <div v-if="listData.length" class="md:flex md:flex-col md:w-[70%] md:px-0 px-6 flex flex-col justify-center items-center gap-6 mb-4">
+    <div v-if="!isLoading" class="md:flex md:flex-col md:w-[70%] md:px-0 px-6 flex flex-col justify-center items-center gap-6 mb-4">
       <CardNewCommon v-for="(item, index) in listData" :key="index" :title="item.title" :description="item.description" :image="item.image" :id="item.id" @click="viewNew(item.id)"/>
     </div>
     <div v-else>
@@ -11,8 +11,8 @@
       <a-skeleton style="width: 400px; height: 200px;" :size="200"/>
       <a-skeleton style="width: 400px; height: 200px;" :size="200"/>
     </div>
-    <div class="text-center">
-      <a-pagination v-model:current="page" :total="totalItems" show-less-items @change="getData" :defaultPageSize="20"/>
+    <div v-if="listData.length" class="text-center">
+      <a-pagination v-model:current="page" :total="totalItems" show-less-items @change="handleGetCodeCategory" :defaultPageSize="20"/>
     </div>
     <div class="bg-[#f9f9f9] py-14 px-16">
       <cost-table-design/>
@@ -37,7 +37,8 @@ export default {
       page: 1,
       listData: [],
       totalItems: 0,
-      title: ''
+      title: '',
+      isLoading: false,
     }
   },
   mounted() {
@@ -67,12 +68,14 @@ export default {
         pageNumber: this.page - 1,
         pageSize: 20
       }
+      this.isLoading = true
       getNewsClient(params).then(res => {
         if (res) {
           this.listData = res.content
           this.totalItems = res.totalElements
         }
       })
+      .finally(() => this.isLoading = false)
     },
     searchByCode(code, isCategoryParent = true) {
       const params = {
