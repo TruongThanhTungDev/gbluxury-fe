@@ -12,6 +12,14 @@ import HeaderHomePage from "./HeaderHomePage.vue";
 export default {
   components: { HeaderHomePage, FooterHomePage },
   name: "LayoutHomePage",
+  mounted() {
+    document.addEventListener('contextmenu', this.disableRightClick);
+  },
+  methods: {
+    disableRightClick(event) {
+      event.preventDefault();
+    },
+  },
 };
 </script>
 
