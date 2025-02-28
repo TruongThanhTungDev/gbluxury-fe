@@ -37,3 +37,12 @@
 .ql-font-montserrat {
   font-family: 'Montserrat', Helvetica Neue, Arial, sans-serif!important;
 }
+.ql-size-small {
+  font-size: 12px!important;
+}
+.ql-size-large {
+  font-size: 18px!important;
+}
+.ql-size-huge {
+  font-size: 32px!important;
+}

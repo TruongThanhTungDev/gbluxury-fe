@@ -117,6 +117,7 @@ export default {
             [{ align: [] }], // Canh lề
             ['link', 'image', 'video'], // Thêm liên kết, hình ảnh, video
             ['blockquote', 'code-block'], // Khối trích dẫn, mã code
+            ["table"],
             ['clean'], // Xóa định dạng
           ],
           clipboard: {

@@ -1,5 +1,5 @@
 <template>
-  <div class="container my-0 mx-auto">
+  <div class="container-custom my-0 mx-auto contain">
     <div v-if="data">
       <div class="ql-editor" v-html="data.content"></div>
     </div>
@@ -42,6 +42,38 @@ export default {
 }
 </script>
 
-<style>
-
+<style scroped>
+.container-custom {
+  width: 68%;
+}
+@media (max-width: 640px) {
+  .container-custom {
+    max-width: 640px;
+    width: 100%;
+  }
+}
+/* @media (min-width: 768px) {
+  .container-custom {
+    max-width: 768px;
+    width: 100%;
+  }
+}
+@media (min-width: 1024px) {
+  .container-custom {
+    max-width: 1024px;
+    width: 100%;
+  }
+}
+@media (min-width: 1280px) {
+  .container-custom {
+    max-width: 1280px;
+    width: 100%;
+  }
+}
+@media (min-width: 1536px) {
+  .container-custom {
+    max-width: 1536px;
+    width: 100%;
+  }
+} */
 </style>
