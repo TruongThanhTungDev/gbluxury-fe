@@ -105,21 +105,26 @@ export default {
       editorOptions: {
         theme: 'snow',
         modules: {
-          toolbar: [
-            [{ header: [1, 2, 3, 4, 5, 6, false] }], // Tiêu đề H1-H6
-            [{ font: ['montserrat'] }],
-            [{ size: ['small', false, 'large', 'huge'] }], // Kích thước font
-            ['bold', 'italic', 'underline', 'strike'], // Chữ đậm, nghiêng, gạch chân, gạch ngang
-            [{ color: [] }, { background: [] }], // Màu chữ và màu nền
-            [{ script: 'sub' }, { script: 'super' }], // Chỉ số dưới, chỉ số trên
-            [{ list: 'ordered' }, { list: 'bullet' }], // Danh sách có thứ tự, không thứ tự
-            [{ indent: '-1' }, { indent: '+1' }], // Tăng giảm thụt đầu dòng
-            [{ align: [] }], // Canh lề
-            ['link', 'image', 'video'], // Thêm liên kết, hình ảnh, video
-            ['blockquote', 'code-block'], // Khối trích dẫn, mã code
-            ["table"],
-            ['clean'], // Xóa định dạng
-          ],
+          toolbar: {
+            container: [
+              [{ header: [1, 2, 3, 4, 5, 6, false] }], // Tiêu đề H1-H6
+              [{ font: ['montserrat'] }],
+              [{ size: ['small', false, 'large', 'huge'] }], // Kích thước font
+              ['bold', 'italic', 'underline', 'strike'], // Chữ đậm, nghiêng, gạch chân, gạch ngang
+              [{ color: [] }, { background: [] }], // Màu chữ và màu nền
+              [{ script: 'sub' }, { script: 'super' }], // Chỉ số dưới, chỉ số trên
+              [{ list: 'ordered' }, { list: 'bullet' }], // Danh sách có thứ tự, không thứ tự
+              [{ indent: '-1' }, { indent: '+1' }], // Tăng giảm thụt đầu dòng
+              [{ align: [] }], // Canh lề
+              ['link', 'image', 'video'], // Thêm liên kết, hình ảnh, video
+              ['blockquote', 'code-block'], // Khối trích dẫn, mã code
+              ["table"],
+              ['clean'], // Xóa định dạng
+            ],
+            handlers: {
+              image: this.selectMultipleImages
+            }
+          },
           clipboard: {
             matchVisual: false, // Tắt dán trực quan
           },
@@ -291,6 +296,31 @@ export default {
           }
         }
       })
+    },
+    selectMultipleImages() {
+      console.log('123 :>> ', 123);
+      const input = document.createElement("input");
+      input.setAttribute("type", "file");
+      input.setAttribute("accept", "image/*");
+      input.setAttribute("multiple", "multiple");
+      input.click();
+
+      input.addEventListener("change", async () => {
+        if (input.files.length) {
+          for (const file of input.files) {
+            uploadImageNews(file).then(res => {
+              if (res.data.code === 200) {
+                const quill = this.$refs.quillEditor.getQuill()
+                const image = res.data.result
+                const range = quill.getSelection()
+                quill.insertEmbed(range.index, 'image', image)
+                quill.deleteText(range.index - 1, 1)
+                this.content = quill.editor.delta
+              }
+            })
+          }
+        }
+      });
     },
   }
 }
