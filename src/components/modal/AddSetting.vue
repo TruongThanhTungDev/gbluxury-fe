@@ -70,7 +70,7 @@
         </a-table>
         <div class="text-end">
           <div>
-            <a-pagination v-model:current="page" :total="totalItems" show-less-items @change="getData" :defaultPageSize="size"/>
+            <a-pagination v-model:current="page" :total="totalItems" show-less-items @change="changeDataByPagegi" :defaultPageSize="size"/>
           </div>
         </div>
       </div>
@@ -249,7 +249,15 @@ export default {
       this.isCategoryParent = false
       this.getData(this.categoryChild)
     },
-    getData(categoryId) {
+    changeDataByPagegi(event) {
+      this.page = event
+      if (this.categoryChild) {
+        this.getData(this.categoryChild)
+      } else {
+        this.getData(this.categoryParent)
+      }
+    },
+    getData(categoryId = '') {
       const payload = {
         title: '',
         isCategoryParent: this.isCategoryParent,

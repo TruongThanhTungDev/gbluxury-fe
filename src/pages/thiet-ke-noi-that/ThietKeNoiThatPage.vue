@@ -67,7 +67,7 @@ export default {
         categoryId: id,
         isCategoryParent: isCategoryParent,
         pageNumber: this.page - 1,
-        pageSize: 20
+        pageSize: 6
       }
       this.isLoading = true
       getNewsClient(params).then(res => {
