@@ -22,7 +22,7 @@
       <div :class="`${sizeTitle} uppercase text-justify mx-1`">
         {{ title }}
       </div>
-      <div :class="`mx-1 text-justify font-[300] ${sizeDescription}`">
+      <div :class="`mx-1 text-left font-[300] ${sizeDescription}`">
         {{ description }}
       </div>
     </div>

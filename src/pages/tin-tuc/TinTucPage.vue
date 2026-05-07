@@ -12,7 +12,7 @@
       <a-skeleton style="width: 400px; height: 200px;" :size="200"/>
     </div>
     <div v-if="listData.length" class="text-center">
-      <a-pagination v-model:current="page" :total="totalItems" show-less-items @change="handleGetCodeCategory" :defaultPageSize="20"/>
+      <a-pagination v-model:current="page" :total="totalItems" show-less-items @change="handleGetCodeCategory" :defaultPageSize="10"/>
     </div>
     <div class="bg-[#f9f9f9] py-14 px-16">
       <cost-table-design/>
@@ -65,8 +65,8 @@ export default {
       const params = {
         categoryId: id,
         isCategoryParent: isCategoryParent,
-        pageNumber: this.page - 1,
-        pageSize: 20
+        page: this.page - 1,
+        size: 10
       }
       this.isLoading = true
       getNewsClient(params).then(res => {
